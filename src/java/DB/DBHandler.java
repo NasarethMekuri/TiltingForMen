@@ -25,6 +25,8 @@ public class DBHandler
         try
         {
             cs = c.prepareCall("{call create_customer(?,?,?,?)}");
+            cs.setString(1, fName);
+            cs.setString(2, lName);
             cs.setString(3, age);
             cs.setString(4, email);
             

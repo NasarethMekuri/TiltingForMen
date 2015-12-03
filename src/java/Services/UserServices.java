@@ -63,6 +63,7 @@ public class UserServices
     public void registerParticipant(@FormParam("fname") String fName, @FormParam("lname") String lName, 
                                     @FormParam("age") String age, @FormParam("email") String email)
     {
-        
+        //Testing connectivity
+        System.out.println(fName + "" + lName + " is " + age + " years old");
     }
 }
