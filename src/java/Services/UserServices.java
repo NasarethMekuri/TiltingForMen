@@ -57,5 +57,9 @@ public class UserServices
     {
         //Testing connectivity
         System.out.println(fName + " " + lName + " is " + age + " years old");
+        
+        //TODO: Write to database here.
+
+        //TODO: Do redirect or return succes/fail page here.
     }
 }
