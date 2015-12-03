@@ -9,9 +9,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 
 /**
@@ -50,9 +52,17 @@ public class UserServices
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
      */
-    @PUT
     @Consumes("application/xml")
     public void putXml(String content)
     {
+    }
+    
+    @Path("/registerparticipant")
+    @POST
+    @Consumes("application/xlx")
+    public void registerParticipant(@FormParam("fname") String fName, @FormParam("lname") String lName, 
+                                    @FormParam("age") String age, @FormParam("email") String email)
+    {
+        
     }
 }
