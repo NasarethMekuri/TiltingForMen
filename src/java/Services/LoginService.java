@@ -14,22 +14,22 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author bruger
  */
-@Path("moderatorservices")
-public class ModeratorServices
+@Path("loginservice")
+public class LoginService
 {
 
     @Context
     private UriInfo context;
 
     /**
-     * Creates a new instance of ModeratorServices
+     * Creates a new instance of UserServices
      */
-    public ModeratorServices()
+    public LoginService()
     {
     }
 
     /**
-     * Retrieves representation of an instance of Services.ModeratorServices
+     * Retrieves representation of an instance of Services.UserServices
      * @return an instance of java.lang.String
      */
     @GET
@@ -41,15 +41,22 @@ public class ModeratorServices
     }
 
     /**
-     * PUT method for updating or creating an instance of ModeratorServices
+     * PUT method for updating or creating an instance of UserServices
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
      */
-    @PUT
     @Consumes("application/xml")
     public void putXml(String content)
     {
     }
     
-    
+    @Path("/login")
+    @POST
+    public void registerParticipant(@FormParam("username") String userName, @FormParam("pw") String pw)
+    {
+        //Testing connectivity
+        System.out.println(userName + " tried to log in.");
+        
+        //TODO Validate email, validate password, verify login.
+    }
 }
