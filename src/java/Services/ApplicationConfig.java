@@ -33,6 +33,7 @@ public class ApplicationConfig extends Application
     private void addRestResourceClasses(Set<Class<?>> resources)
     {
         resources.add(Services.AdminServices.class);
+        resources.add(Services.LoginService.class);
         resources.add(Services.ModeratorServices.class);
         resources.add(Services.UserServices.class);
     }
