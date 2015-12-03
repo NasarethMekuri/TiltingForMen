@@ -51,7 +51,7 @@
                             <h2 class="mbr-header__text">TILMELDING</h2>
                         </div>
                         
-                        <form action="userservices/registerparticipant" method="post">
+                        <form action="webresources/userservices/registerparticipant" method="post">
                             
                             <div class="form-group">
                                 <input type="text" class="form-control" name="fname" required="" placeholder="Fornavn">
@@ -59,21 +59,23 @@
 							<div class="form-group">
                                 <input type="text" class="form-control" name="lname" placeholder="Efternavn">
                             </div>
-							<div class="form-group">
-                                <select>
-									<option value="1"> 0-6 år </option>
-									<option value="2"> 7-12 år </option>
-									<option value="3"> 13-18 år </option>
-								</select>
+			    <div class="form-group">
+                                <select name="age">
+                                	<option value="1"> 0-6 år </option>
+					<option value="2"> 7-12 år </option>
+					<option value="3"> 13-18 år </option>
+                                </select>
                             </div>
-							<div class="form-group">
+			    <div class="form-group">
                                 <input type="email" class="form-control" name="email" required="" placeholder="Email">
                             </div>
                             
                             <div class="form-group">
                                 <textarea class="form-control" name="message" placeholder="Message" rows="7"></textarea>
                             </div>
-                            <div class="mbr-buttons mbr-buttons--right"><button type="submit" class="mbr-buttons__btn btn btn-lg btn-danger">TILMELD</button></div>
+                            <div class="mbr-buttons mbr-buttons--right">
+                                <button type="submit" class="mbr-buttons__btn btn btn-lg btn-danger">TILMELD</button>
+                            </div>
                         </form>
                     </div>
                 </div>
