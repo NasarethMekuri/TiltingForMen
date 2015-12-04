@@ -56,10 +56,6 @@ public class UserServices
     public void registerParticipant(@FormParam("fname") String fName, @FormParam("lname") String lName, 
                                     @FormParam("age") String age, @FormParam("email") String email)
     {
-        //Testing connectivity
-        System.out.println(fName + " " + lName + " is " + age + " years old");
-        
-        //TODO: Write to database here.
         DBHandler.getInstance().createParticipant(fName, lName, email, null, -1, Integer.parseInt(age), false, false);
 
         //TODO: Do redirect or return succes/fail page here.
