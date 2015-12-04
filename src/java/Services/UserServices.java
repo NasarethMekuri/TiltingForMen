@@ -59,16 +59,13 @@ public class UserServices
     public Response registerParticipant(@FormParam("fname") String fName, @FormParam("lname") String lName, 
                                     @FormParam("age") String age, @FormParam("email") String email)
     {
-<<<<<<< HEAD
-        DBHandler.getInstance().createParticipant(fName, lName, email, null, -1, Integer.parseInt(age), false, false);
-
         //TODO: Do redirect or return succes/fail page here.
-=======
+
         //Testing connectivity
         //System.out.println(fName + " " + lName + " is " + age + " years old");
         
         //Writing to the database.
-        if (true) //TODO: If participant is not already signed up...
+        if (!DBHandler.getInstance().hasParticipant(fName, lName, email)) 
         {
             DBHandler.getInstance().createParticipant(fName, lName, email, null, -1, Integer.parseInt(age), false, false);
         }
@@ -90,6 +87,6 @@ public class UserServices
         
         
         return Response.temporaryRedirect(confirmPage).build();
->>>>>>> 51fe701a2e5290043e4e4c4f37691f7cfef510fd
+
     }
 }
