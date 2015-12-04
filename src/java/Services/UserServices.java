@@ -6,8 +6,11 @@
 package Services;
 
 import DB.DBHandler;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -53,15 +56,34 @@ public class UserServices
     
     @Path("/registerparticipant")
     @POST
-    public void registerParticipant(@FormParam("fname") String fName, @FormParam("lname") String lName, 
+    public Response registerParticipant(@FormParam("fname") String fName, @FormParam("lname") String lName, 
                                     @FormParam("age") String age, @FormParam("email") String email)
     {
         //Testing connectivity
-        System.out.println(fName + " " + lName + " is " + age + " years old");
+        //System.out.println(fName + " " + lName + " is " + age + " years old");
         
-        //TODO: Write to database here.
-        DBHandler.getInstance().createParticipant(fName, lName, email, null, -1, Integer.parseInt(age), false, false);
-
-        //TODO: Do redirect or return succes/fail page here.
+        //Writing to the database.
+        if (true) //TODO: If participant is not already signed up...
+        {
+            DBHandler.getInstance().createParticipant(fName, lName, email, null, -1, Integer.parseInt(age), false, false);
+        }
+        else
+        {
+            //TODO: return registration_error page ().
+        }
+        
+        
+        URI confirmPage = null;
+        try
+        {
+        confirmPage = new URI("http://127.0.0.1:8080/TiltingForMen/registration_success.html");
+        }
+        catch (URISyntaxException ex)
+        {
+        System.out.println("Error:" + ex);
+        }
+        
+        
+        return Response.temporaryRedirect(confirmPage).build();
     }
 }
