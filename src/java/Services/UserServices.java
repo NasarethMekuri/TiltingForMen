@@ -5,6 +5,7 @@
  */
 package Services;
 
+import DB.DBHandler;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -59,6 +60,7 @@ public class UserServices
         System.out.println(fName + " " + lName + " is " + age + " years old");
         
         //TODO: Write to database here.
+        DBHandler.getInstance().createParticipant(fName, lName, email, null, -1, Integer.parseInt(age), false, false);
 
         //TODO: Do redirect or return succes/fail page here.
     }

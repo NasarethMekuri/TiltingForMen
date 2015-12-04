@@ -8,6 +8,8 @@ package DB;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,20 +17,32 @@ import java.sql.SQLException;
  */
 public class DBHandler
 {
-    public void createParticipant(String fName, String lName, String age, String email) throws SQLException
+    private static DBHandler _instance;
+    
+    private DBHandler() { } //Private constructor
+    
+    public void createParticipant(String fName, String lName, String email, String color, int number, 
+                                  int age, boolean lastMinute, boolean arrived)
     {
-        Connection c = DBConnectionFactory.getInstance().getConnection();
-        
-        CallableStatement cs = null;
-        int rowCount = -1;
-        
+        Connection c = null;
         try
         {
-            cs = c.prepareCall("{call create_customer(?,?,?,?)}");
-            cs.setString(1, fName);
-            cs.setString(2, lName);
-            cs.setString(3, age);
+            c = DBConnectionFactory.getInstance().getConnection();
+
+            CallableStatement cs = null;
+            int rowCount = -1;
+            String id = fName + lName + email;
+
+            cs = c.prepareCall("{call create_participant(?,?,?,?,?,?,?,?,?)}");
+            cs.setString(1, id);
+            cs.setString(2, fName);
+            cs.setString(3, lName);
             cs.setString(4, email);
+            cs.setString(5, color);
+            cs.setInt(6, number);
+            cs.setInt(7, age);
+            cs.setBoolean(8, lastMinute); //Last Minute
+            cs.setBoolean(9, arrived); // Arrived
             
             rowCount = cs.executeUpdate();
             cs.close();
@@ -36,7 +50,7 @@ public class DBHandler
         }
         catch (SQLException ex)
         {
-            System.out.println("Error when creating Customer in DB!\n" + ex.getLocalizedMessage());
+            System.out.println(ex);
         }
         finally
         {
@@ -46,8 +60,17 @@ public class DBHandler
             }
             catch (SQLException ex)
             {
-                System.out.println("Failed to close connection! @DBHandler createCustomer\n" + ex.getLocalizedMessage());
+                System.out.println("Failed to close connection! @DBHandler createParticipant\n" + ex.getLocalizedMessage());
             }
         }
+    }
+    
+    
+    
+    public static synchronized DBHandler getInstance()
+    {
+        if(_instance == null)
+            _instance = new DBHandler();
+        return _instance;
     }
 }

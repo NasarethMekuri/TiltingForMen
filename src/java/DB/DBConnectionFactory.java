@@ -20,9 +20,9 @@ public class DBConnectionFactory
     private final String SERVER_NAME = "localhost";//"10.153.0.143"; //"localhost"; 
     private final String DATABASE_INSTANCE = "SQLEXPRESS";
     private final int PORTNO = 1433;//49197; // 58828; //1433;
-    private final String DATABASE_NAME = "dudeReg";
+    private final String DATABASE_NAME = "tiltingDB";
     private final String USERNAME = "sa";
-    private final String PASSWORD = _pw;
+    private final String PASSWORD;
 
     private DBConnectionFactory() throws SQLServerException, SQLException 
     {
@@ -30,6 +30,7 @@ public class DBConnectionFactory
         {_pw = "Brutalis";}
         else
         {_pw = "offlimit";}
+        PASSWORD = _pw;
     }
 
     /**
