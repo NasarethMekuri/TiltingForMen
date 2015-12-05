@@ -32,28 +32,7 @@ public class UserServices
     {
     }
     
-    /**
-     * Retrieves representation of an instance of Services.UserServices
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/xml")
-    public String getXml()
-    {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
-    
-    /**
-     * PUT method for updating or creating an instance of UserServices
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @Consumes("application/xml")
-    public void putXml(String content)
-    {
-    }
-    
+       
     @Path("/registerparticipant")
     @POST
     public Response registerParticipant(@FormParam("fname") String fName, @FormParam("lname") String lName,
@@ -88,5 +67,27 @@ public class UserServices
         }
         
         return Response.temporaryRedirect(redirectPage).build();
+    }
+    
+    
+    @Path("/gallowchoice")
+    @POST
+    public Response gallowChoice(@FormParam("gallow") String gallowNumber)
+    {
+        //Testing connectivity - 
+        //SBL: TEST conducted with following code: Warning:   GRIZZLY0206: Exception occurred during body skip java.io.IOException
+        //SBL: Might be because of return null; ? - 
+        //SBL: correct values are read from form!!
+        //System.out.println("Gallow number " + gallowNumber + " was chosen");
+        
+        //TODO:
+        /*
+        1. determine if event is active. (ongoing)
+        2. determine how many gallows are active.
+        3. display available gallows for the user. (manipulate html file...)
+        */
+        
+        
+        return null;
     }
 }
