@@ -5,8 +5,7 @@
 */
 package Services;
 
-import DB.DBHandler;
-import java.io.IOException;
+import Persistence.DBHandler;
 import java.net.URI;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -78,14 +77,9 @@ public class UserServices
             3. display available gallows for the user. (manipulate html file...)
             */
             
-            try
-            {
-                updateLiveScorePage(); //Params should be: int activeGallows... (p.t. hardcoded to 3 in livescore.html)
-            }
-            catch (IOException ex)
-            {
-                System.out.println("[System]: Error building liveScorePage: " + ex);
-            }
+            
+            buildGallowTable(); //Params should be: int activeGallows... (p.t. hardcoded to 3 in livescore.html)
+            
             
             pageURL = "http://127.0.0.1:8080/TiltingForMen/livescore.html";
         }
@@ -103,10 +97,10 @@ public class UserServices
         //SBL: correct values are read from form!!
         //System.out.println("Gallow number " + gallowNumber + " was chosen");
         
-        return null;
+        return null; //Redirect to a table with participants for the chosen gallow.
     }
     
-    private void updateLiveScorePage() throws IOException
+    private void buildGallowTable()
     {
     }
 }

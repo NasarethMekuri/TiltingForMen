@@ -1,4 +1,4 @@
-package DB;
+package Persistence;
 
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;

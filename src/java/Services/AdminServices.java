@@ -15,7 +15,7 @@ import javax.ws.rs.core.UriInfo;
  * @author bruger
  */
 @Path("adminservices")
-public class AdminServices
+public class AdminServices 
 {
 
     @Context
@@ -28,26 +28,5 @@ public class AdminServices
     {
     }
 
-    /**
-     * Retrieves representation of an instance of Services.AdminServices
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/xml")
-    public String getXml()
-    {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * PUT method for updating or creating an instance of AdminServices
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/xml")
-    public void putXml(String content)
-    {
-    }
+   
 }

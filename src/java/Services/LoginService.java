@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package Services;
 
 import java.net.URI;
@@ -25,7 +25,7 @@ public class LoginService
     
     @Context
     private UriInfo context;
-
+    
     /**
      * Creates a new instance of UserServices
      */
@@ -48,18 +48,18 @@ public class LoginService
         {
             System.out.println("Error:" + ex);
         }
-                
+        
         
         /**
-        //Testing connectivity
-        System.out.println(userName + " tried to log in.");
-        */
+         * //Testing connectivity
+         * System.out.println(userName + " tried to log in.");
+         */
         
         /*
-                TODO Validate password, 
-                verify login 
-                    -by email and password
-                    -by Role. (role 1 = admin | role 2 = user, role 0 = reserved for system owner.)
+        TODO Validate password,
+        verify login
+        -by email and password
+        -by Role. (role 1 = admin | role 2 = user, role 0 = reserved for system owner.)
         */
         
         if (compiledPassword.matches())
@@ -72,8 +72,6 @@ public class LoginService
             //TODO: Redirect...
             return Response.temporaryRedirect(tryagainPage).build();
         }
-        
-        
-        
     }
+    
 }
