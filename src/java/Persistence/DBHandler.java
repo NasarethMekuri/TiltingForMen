@@ -85,8 +85,7 @@ public class DBHandler
             cs.setString(1, id);
             
             ResultSet rs = cs.executeQuery();
-            
-            
+
             while(rs.next())
             {
                 result += rs.getString(1);
@@ -149,6 +148,23 @@ public class DBHandler
                 System.out.println("Failed to close connection! @DBHandler createParticipant\n" + ex.getLocalizedMessage());
             }
         }
+    }
+    
+    public String[][] getParticipantByGallow(int gallowNumber)
+    {
+        //TODO: Remove Dummy code and make this work!
+        int col = 3;
+        int row = 5;
+        String[][] temp = new String[col][row];
+        
+        for (int x = 0; x < col; x++)
+        {
+            for (int y = 0; y < row; y++)
+            {
+                temp[x][y] = "Galge " + gallowNumber + " " + x + y;
+            }
+        }
+        return temp;
     }
 
     public static synchronized DBHandler getInstance()

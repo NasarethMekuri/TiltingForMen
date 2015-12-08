@@ -5,8 +5,17 @@
 */
 package Services;
 
+import Logical.HTMLFactory;
 import Persistence.DBHandler;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -29,6 +38,7 @@ public class UserServices
      */
     public UserServices()
     {
+                
     }
     
     
@@ -77,30 +87,55 @@ public class UserServices
             3. display available gallows for the user. (manipulate html file...)
             */
             
+            String html = HTMLFactory.getInstance().createGallowChoicePage(8);
+
+            File f = new File(getPath() + "/gallowchoice.html");
+            OutputStreamWriter writer = null;
             
-            buildGallowTable(); //Params should be: int activeGallows... (p.t. hardcoded to 3 in livescore.html)
-            
-            
-            pageURL = "http://127.0.0.1:8080/TiltingForMen/livescore.html";
+            try
+            {
+                writer = new OutputStreamWriter(new FileOutputStream(f), StandardCharsets.UTF_8);
+                writer.write(html);
+            } 
+            catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+            finally
+            {
+                try
+                {
+                    writer.close();
+                } 
+                catch (IOException ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+            pageURL = "http://127.0.0.1:8080/TiltingForMen/gallowchoice.html";
         }
-        
+        //return HTMLFactory.getInstance().createGallowChoicePage(15);
         return Response.seeOther(URI.create(pageURL)).build();
     }
     
     @Path("/gallowchoice")
     @POST
-    public Response gallowChoice(@FormParam("gallow") String gallowNumber)
+    //@Produces("Text/HTML")
+    public String gallowChoice(@FormParam("gallow") String gallowNumber)
     {
-        //Testing connectivity -
-        //SBL: TEST conducted with following code: Warning:   GRIZZLY0206: Exception occurred during body skip java.io.IOException
-        //SBL: Might be because of return null; ? -
-        //SBL: correct values are read from form!!
-        //System.out.println("Gallow number " + gallowNumber + " was chosen");
-        
-        return null; //Redirect to a table with participants for the chosen gallow.
+        return HTMLFactory.getInstance().createGallowTable(Integer.parseInt(gallowNumber)); //Redirect to a table with participants for the chosen gallow.
     }
-    
-    private void buildGallowTable()
+   
+    /**
+     * Used for testing on different systems
+     * @return The local path for the web directory.
+     */
+    private String getPath()
     {
+        String user = System.getProperty("user.name");
+        if (!user.equals("bruger"))
+            return "SimonsPath";
+        else
+            return "C:\\Homework\\3.Sem Project\\TiltingForMen\\web";
     }
 }
