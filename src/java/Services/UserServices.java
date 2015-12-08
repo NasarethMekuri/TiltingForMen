@@ -9,13 +9,10 @@ import Logical.HTMLFactory;
 import Persistence.DBHandler;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -38,7 +35,7 @@ public class UserServices
      */
     public UserServices()
     {
-                
+        
     }
     
     
@@ -88,7 +85,7 @@ public class UserServices
             */
             
             String html = HTMLFactory.getInstance().createGallowChoicePage(8);
-
+            
             File f = new File(getPath() + "/gallowchoice.html");
             OutputStreamWriter writer = null;
             
@@ -96,7 +93,7 @@ public class UserServices
             {
                 writer = new OutputStreamWriter(new FileOutputStream(f), StandardCharsets.UTF_8);
                 writer.write(html);
-            } 
+            }
             catch (IOException ex)
             {
                 ex.printStackTrace();
@@ -106,7 +103,7 @@ public class UserServices
                 try
                 {
                     writer.close();
-                } 
+                }
                 catch (IOException ex)
                 {
                     ex.printStackTrace();
@@ -125,7 +122,7 @@ public class UserServices
     {
         return HTMLFactory.getInstance().createGallowTable(Integer.parseInt(gallowNumber)); //Redirect to a table with participants for the chosen gallow.
     }
-   
+    
     /**
      * Used for testing on different systems
      * @return The local path for the web directory.
@@ -133,9 +130,20 @@ public class UserServices
     private String getPath()
     {
         String user = System.getProperty("user.name");
-        if (!user.equals("bruger"))
-            return "SimonsPath";
+        if (!user.equals("bruger")) 
+        {
+            if (!user.equals("Cymon343"))
+            {
+                return "SimonLaptopString";
+            }
+            else
+            {
+                return "C:\\Users\\Cymon343\\Documents\\GitHub\\TiltingForMen\\web";
+            }
+        }
         else
+        {
             return "C:\\Homework\\3.Sem Project\\TiltingForMen\\web";
+        }
     }
 }

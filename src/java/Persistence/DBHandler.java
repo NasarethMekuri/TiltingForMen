@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -149,6 +147,54 @@ public class DBHandler
             }
         }
     }
+     
+    /**
+     * Retrieves a user from the database. Used for logging into the system.
+     * @param email The UserID (the email address of the user)
+     * @return a String array containing: [0]= role [1]= Password.
+     */
+    public String[] getUserByEmail(String email)
+    {
+        Connection c = null;
+        String[] result = new String[2];
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        try
+        {
+            
+            c = DBConnectionFactory.getInstance().getConnection();
+
+            CallableStatement cs = null;
+            
+
+            cs = c.prepareCall("{call select_user_by_email(?)}");
+            cs.setString(1, email);
+            
+            ResultSet rs = cs.executeQuery();
+
+            while(rs.next())
+            {
+                result[0] = String.valueOf(rs.getInt(6)); //role
+                result[1] = rs.getString(7);//password
+            }
+            cs.close();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println(ex);
+        }
+        finally
+        {
+            try
+            {
+                c.close();
+            }
+            catch (SQLException ex)
+            {
+                System.out.println("Failed to close connection! @DBHandler getUserByEmail\n" + ex.getLocalizedMessage());
+            }
+        }
+        return result;
+    }
     
     public String[][] getParticipantByGallow(int gallowNumber)
     {
@@ -173,4 +219,6 @@ public class DBHandler
             _instance = new DBHandler();
         return _instance;
     }
+
+   
 }

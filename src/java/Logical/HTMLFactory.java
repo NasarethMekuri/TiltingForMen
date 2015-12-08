@@ -6,6 +6,7 @@ public class HTMLFactory
 {
     private static HTMLFactory _instance;
     private HTMLFactory() {}
+    private HTMLElementsHolder elements = new HTMLElementsHolder();
     
     /**
      * Dynamically creates a HTML formatted String containg a table based on the parameter given.
@@ -54,17 +55,22 @@ public class HTMLFactory
     public String createGallowChoicePage(int numberOfGallows)
     {
         StringBuilder sb = new StringBuilder();
-        sb.append(getBeginning("Vælg Galge"));
-        sb.append("<div><h2>VÆLG GALGE</h2></div>"); 
+        //sb.append(getBeginning("Vælg Galge"));
+        //sb.append("<div><h2>VÆLG GALGE</h2></div>"); //Could call insertHeading("VÆLG GALGE");
+        sb.append(elements.getPageBeginning("Vælg galge", "VÆLG GALGE"));//[***DELETE IF REVERT***]
         sb.append("<form action=\"webresources/userservices/gallowchoice\" method=\"post\">\n");
-        sb.append("<div><select name=\"gallow\">");
+        sb.append("<div><center><select name=\"gallow\">");
         
         for (int i = 0; i < numberOfGallows; i++)
         {
             sb.append("<option value=\"").append(i + 1).append("\"> Galge ").append(i + 1).append(" </option>");
         }
-        sb.append("</select><input type=\"submit\" value=\"Vælg Galge\"></div></form>");
-        sb.append(getEnd());
+        sb.append("</select>"); //[***DELETE IF REVERT***]
+        sb.append(elements.getButton("Vælg Galge"));
+        sb.append("</center>"); //[***DELETE IF REVERT***]
+        //sb.append("</select><input type=\"submit\" value=\"Vælg Galge\"></div></form>");
+        sb.append(elements.getPageEnd()); //[***DELETE IF REVERT***]
+        //sb.append(getEnd());
         
         return sb.toString();
     }
@@ -74,6 +80,15 @@ public class HTMLFactory
         return "<!DOCTYPE html>\n" +
         "<html><head><meta charset=\"UTF-8\"><title> " + title + "</title>\n" +
         "</head><body>";
+    }
+    
+    private String insertHeading(String heading)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div class=\"mbr-header mbr-header--center mbr-header--std-padding\"><h2 class=\"mbr-header__text\">");
+        sb.append(heading);
+        sb.append("</h2></div>");
+        return sb.toString();
     }
     
     private String getEnd()

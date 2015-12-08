@@ -5,8 +5,8 @@
 */
 package Services;
 
+import Persistence.DBHandler;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.ws.rs.*;
@@ -39,39 +39,43 @@ public class LoginService
     {
         Pattern p = Pattern.compile("[a-zA-Z0-9]\\w{5,50}"); //Special characters are not allowed (including æøå ÆØÅ)
         Matcher compiledPassword = p.matcher(pw);
-        URI tryagainPage = null;
-        try
-        {
-            tryagainPage = new URI("http://127.0.0.1:8080/TiltingForMen/login_error.html"); //THA ... help!
-        }
-        catch (URISyntaxException ex)
-        {
-            System.out.println("Error:" + ex);
-        }
-        
+        String tryAgainURL = "http://127.0.0.1:8080/TiltingForMen/login_error.html";
         
         /**
          * //Testing connectivity
          * System.out.println(userName + " tried to log in.");
          */
         
-        /*
-        TODO Validate password,
-        verify login
-        -by email and password
-        -by Role. (role 1 = admin | role 2 = user, role 0 = reserved for system owner.)
-        */
-        
-        if (compiledPassword.matches())
-        {
-            //TODO: We still need to figure out how this works.
-            return null;
+        if (compiledPassword.matches()) //Password regex check
+        {            
+            //[0]=role [1]=Password.
+            String[] verificationData = DBHandler.getInstance().getUserByEmail(userName);
+            
+            if (pw.equals(verificationData[1]))
+            {
+                switch (Integer.parseInt(verificationData[0]))
+                {
+                    case 0:
+                        //role 0 = reserved for system owner - atm sysOwner will be redirected to tryagain. 
+                        return Response.seeOther(URI.create(tryAgainURL)).build();
+                    case 1:
+                        //TODO: redirect to admin page -Same rights as moderator? (role built for future?)
+                        break;
+                        case 2:
+                        //TODO: redirect to user/Moderator page (gallowChoice for Mods?)
+                        break;
+                }
+            }
+            else
+            {
+                return Response.seeOther(URI.create(tryAgainURL)).build();
+            }
         }
         else
         {
-            //TODO: Redirect...
-            return Response.temporaryRedirect(tryagainPage).build();
+            return Response.seeOther(URI.create(tryAgainURL)).build();
         }
+        return Response.seeOther(URI.create(tryAgainURL)).build();
     }
     
 }
