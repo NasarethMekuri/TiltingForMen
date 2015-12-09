@@ -73,7 +73,7 @@ public class HTMLElementsHolder
      *
      * @param heading
      * @param size 1= Largest, 2= second Largest ... 6= smallest
-     * @return A String formatted as a HTML heading.
+     * @return A String formetted as a HTML heading.
      */
     public String getHeading(String heading, int size)
     {
@@ -89,7 +89,17 @@ public class HTMLElementsHolder
     }
     
     /**
-     *
+     * Clean button generator. Creates a button.
+     * @param buttonName The name that will be displayed on the button.
+     * @return A String formatted as a HTML button.
+     */
+    public String getButton(String buttonName)
+    {
+        return "<button type=\"submit\" class=\"mbr-buttons__btn btn btn-sm btn-danger\">" + buttonName + "</button>";
+    }
+    
+    /**
+     * Button generator with form
      * @param buttonName The name that will be displayed on the button.
      * @param target the target where a user will be directed when pressing the button.
      * @return A String formatted as a HTML form with nothing but a button.
