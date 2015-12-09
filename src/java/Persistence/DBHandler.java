@@ -5,11 +5,14 @@
  */
 package Persistence;
 
+import Logical.Participant;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -212,6 +215,49 @@ public class DBHandler
         }
         return temp;
     }
+    
+    public List<Participant> getParticipantsByYear(int year)
+    {
+        Connection c = null;
+        List<Participant> result = new ArrayList<Participant>();
+        try
+        {
+            c = DBConnectionFactory.getInstance().getConnection();
+
+            CallableStatement cs = null;
+        
+            cs = c.prepareCall("{call select_participant_by_year(?)}");
+            cs.setInt(1, year);
+        
+            ResultSet rs = cs.executeQuery();
+            
+            while(rs.next())
+            {
+                result.add(new Participant(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6),
+                rs.getInt(7), rs.getBoolean(8), rs.getBoolean(9), rs.getInt(10)));
+            }
+            cs.close();
+               
+        }
+        catch (SQLException ex)
+        {
+            System.out.println(ex);
+        }
+        finally
+        {
+            try
+            {
+                c.close();
+            }
+            catch (SQLException ex)
+            {
+                System.out.println("Failed to close connection! @DBHandler createParticipant\n" + ex.getLocalizedMessage());
+            }
+        }
+        return result;
+    }
+    
+    
 
     /**
      * Getter method for the single instance of the DBHandler.
