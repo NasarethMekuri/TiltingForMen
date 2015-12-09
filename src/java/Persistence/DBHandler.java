@@ -198,7 +198,7 @@ public class DBHandler
     
     public String[][] getParticipantByGallow(int gallowNumber)
     {
-        //TODO: Remove Dummy code and make this work!
+        //TODO: Remove Dummy code and make this work! [Database design!]
         int col = 3;
         int row = 5;
         String[][] temp = new String[col][row];
@@ -213,6 +213,11 @@ public class DBHandler
         return temp;
     }
 
+    /**
+     * Getter method for the single instance of the DBHandler.
+     * NB: this method is synchronized!
+     * @return the instance of DBHandler
+     */
     public static synchronized DBHandler getInstance()
     {
         if(_instance == null)

@@ -55,9 +55,7 @@ public class HTMLFactory
     public String createGallowChoicePage(int numberOfGallows)
     {
         StringBuilder sb = new StringBuilder();
-        //sb.append(getBeginning("Vælg Galge"));
-        //sb.append("<div><h2>VÆLG GALGE</h2></div>"); //Could call insertHeading("VÆLG GALGE");
-        sb.append(elements.getPageBeginning("Vælg galge", "VÆLG GALGE"));//[***DELETE IF REVERT***]
+        sb.append(elements.getPageBeginning("Vælg galge", "VÆLG GALGE"));
         sb.append("<form action=\"webresources/userservices/gallowchoice\" method=\"post\">\n");
         sb.append("<div><center><select name=\"gallow\">");
         
@@ -65,12 +63,10 @@ public class HTMLFactory
         {
             sb.append("<option value=\"").append(i + 1).append("\"> Galge ").append(i + 1).append(" </option>");
         }
-        sb.append("</select>"); //[***DELETE IF REVERT***]
+        sb.append("</select>"); 
         sb.append(elements.getButton("Vælg Galge"));
-        sb.append("</center>"); //[***DELETE IF REVERT***]
-        //sb.append("</select><input type=\"submit\" value=\"Vælg Galge\"></div></form>");
-        sb.append(elements.getPageEnd()); //[***DELETE IF REVERT***]
-        //sb.append(getEnd());
+        sb.append("</center>");
+        sb.append(elements.getPageEnd());
         
         return sb.toString();
     }

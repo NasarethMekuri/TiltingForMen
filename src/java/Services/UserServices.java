@@ -134,16 +134,16 @@ public class UserServices
         {
             if (!user.equals("Cymon343"))
             {
-                return "SimonLaptopString";
+                return "C:\\Users\\Simon\\Documents\\GitHub\\TiltingForMen\\web"; //Server @SimonLaptop
             }
             else
             {
-                return "C:\\Users\\Cymon343\\Documents\\GitHub\\TiltingForMen\\web";
+                return "C:\\Users\\Cymon343\\Documents\\GitHub\\TiltingForMen\\web"; //Server @SimonDesktop
             }
         }
         else
         {
-            return "C:\\Homework\\3.Sem Project\\TiltingForMen\\web";
+            return "C:\\Homework\\3.Sem Project\\TiltingForMen\\web"; //Server @MortenLaptop
         }
     }
 }
