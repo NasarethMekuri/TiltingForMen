@@ -78,37 +78,12 @@ public class UserServices
         }
         else
         {
-            //TODO:
-            /*
-            2. determine how many gallows are active.
-            3. display available gallows for the user. (manipulate html file...)
-            */
+            //TODO: Determine how many gallows are active. (Admin startEventButton? in adminJava-Client???)
+          
             
-            String html = HTMLFactory.getInstance().createGallowChoicePage(8);
+            String html = HTMLFactory.getInstance().createGallowChoicePage(23);
+            createHTMLPage("gallowchoice", html);
             
-            File f = new File(getPath() + "/gallowchoice.html");
-            OutputStreamWriter writer = null;
-            
-            try
-            {
-                writer = new OutputStreamWriter(new FileOutputStream(f), StandardCharsets.UTF_8);
-                writer.write(html);
-            }
-            catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-            finally
-            {
-                try
-                {
-                    writer.close();
-                }
-                catch (IOException ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
             pageURL = "http://127.0.0.1:8080/TiltingForMen/gallowchoice.html";
         }
         //return HTMLFactory.getInstance().createGallowChoicePage(15);
@@ -117,10 +92,12 @@ public class UserServices
     
     @Path("/gallowchoice")
     @POST
-    //@Produces("Text/HTML")
-    public String gallowChoice(@FormParam("gallow") String gallowNumber)
+    public Response gallowChoice(@FormParam("gallow") String gallowNumber)
     {
-        return HTMLFactory.getInstance().createGallowTable(Integer.parseInt(gallowNumber)); //Redirect to a table with participants for the chosen gallow.
+        String html = HTMLFactory.getInstance().createGallowTable(Integer.parseInt(gallowNumber)); //Redirect to a table with participants for the chosen gallow.
+        String pageURL = "http://127.0.0.1:8080/TiltingForMen/"+ createHTMLPage("gametable", html) + ".html";
+        
+        return Response.seeOther(URI.create(pageURL)).build();
     }
     
     /**
@@ -145,5 +122,34 @@ public class UserServices
         {
             return "C:\\Homework\\3.Sem Project\\TiltingForMen\\web"; //Server @MortenLaptop
         }
+    }
+    
+    private String createHTMLPage(String pageName, String HTML)
+    {
+        String path = getPath() + "/"+ pageName +".html";
+        File f = new File(path);
+            OutputStreamWriter writer = null;
+            
+            try
+            {
+                writer = new OutputStreamWriter(new FileOutputStream(f), StandardCharsets.UTF_8);
+                writer.write(HTML);
+            }
+            catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+            finally
+            {
+                try
+                {
+                    writer.close();
+                }
+                catch (IOException ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+            return pageName;
     }
 }

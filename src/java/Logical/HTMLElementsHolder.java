@@ -59,7 +59,7 @@ public class HTMLElementsHolder
     {
         StringBuilder sb = new StringBuilder();
         
-        sb.append("</div></div></div></div></div></section>");
+        sb.append("</div></div></div></div></div></section>"); 
         sb.append("<script src=\"assets/jquery/jquery.min.js\"></script>");
         sb.append("<script src=\"assets/bootstrap/js/bootstrap.min.js\"></script>");
         sb.append("<script src=\"assets/smooth-scroll/SmoothScroll.js\"></script>");

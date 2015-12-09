@@ -44,10 +44,10 @@ public class HTMLFactory
     {
         StringBuilder sb = new StringBuilder();
         
-        sb.append(getBeginning("Galge " + gallowNumber));
+        sb.append(elements.getPageBeginning("Galge " + gallowNumber, "Galge " + gallowNumber));
         
-        sb.append(generateTable(DBHandler.getInstance().getParticipantByGallow(gallowNumber)));
-        sb.append(getEnd());
+        sb.append(generateTable(DBHandler.getInstance().getParticipantByGallow(gallowNumber))); //******* uncomment
+        sb.append(elements.getPageEnd());
         
         return sb.toString();
     }
@@ -65,7 +65,7 @@ public class HTMLFactory
         }
         sb.append("</select>"); 
         sb.append(elements.getButton("Vælg Galge"));
-        sb.append("</center>");
+        sb.append("</center></div>"); //added </div> ******
         sb.append(elements.getPageEnd());
         
         return sb.toString();
