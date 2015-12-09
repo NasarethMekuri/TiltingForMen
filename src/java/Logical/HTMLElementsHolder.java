@@ -73,7 +73,7 @@ public class HTMLElementsHolder
      *
      * @param heading
      * @param size 1= Largest, 2= second Largest ... 6= smallest
-     * @return A String formetted as a HTML heading.
+     * @return A String formatted as a HTML heading.
      */
     public String getHeading(String heading, int size)
     {
@@ -88,9 +88,15 @@ public class HTMLElementsHolder
         return "<div class=\"mbr-header mbr-header--center mbr-header--std-padding\"> <h"+ size +" class=\"mbr-header__text\">"+ heading +"</h"+ size +"></div>";
     }
     
-    public String getButton(String buttonName)
+    /**
+     *
+     * @param buttonName The name that will be displayed on the button.
+     * @param target the target where a user will be directed when pressing the button.
+     * @return A String formatted as a HTML form with nothing but a button.
+     */
+    public String getButton(String buttonName, String target)
     {
-        return "<button type=\"submit\" class=\"mbr-buttons__btn btn btn-sm btn-danger\">" + buttonName + "</button>";
+        return "<form action=\""+ target +"\">\n<div class=\"mbr-buttons mbr-buttons--center\">\n<button type=\"submit\" class=\"mbr-buttons__btn btn btn-sm btn-danger\">"+ buttonName +"</button>\n</div>\n</form>";
     }
     
     //**WARNING TODO FIXME : Duplicate code from UserServices!!! **\\
