@@ -5,6 +5,7 @@
  */
 package Logical;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,12 @@ public class GameTable
     public GameTable(List<Participant> participants)
     {
         _participants = participants;
+        _scores = new HashMap<Participant, List<Boolean>>();
+    }
+    
+    public GameTable()
+    {
+        _participants = new ArrayList<Participant>();
         _scores = new HashMap<Participant, List<Boolean>>();
     }
 
