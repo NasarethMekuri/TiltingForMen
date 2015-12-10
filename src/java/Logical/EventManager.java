@@ -5,6 +5,8 @@
  */
 package Logical;
 
+import java.util.List;
+
 /**
  *
  * @author bruger
@@ -16,9 +18,9 @@ public class EventManager
     
     private EventManager(){}
     
-    public void startNewEvent(int year, int numOfgallowWriters, int numOfAvailableGallows, int maxParticipantsPrGallow, int minTotalBuffer)
+    public void startNewEvent(int year, int numOfgallowWriters, int numOfAvailableGallows, int maxParticipantsPrGallow, int minTotalBuffer, List<Shirt> shirts)
     {
-        _event = new Event(year, numOfgallowWriters, numOfAvailableGallows, maxParticipantsPrGallow, minTotalBuffer);
+        _event = new Event(year, numOfgallowWriters, numOfAvailableGallows, maxParticipantsPrGallow, minTotalBuffer, shirts);
         
     }
     
