@@ -63,7 +63,36 @@ public class AdminServices
         return Response.temporaryRedirect(URI.create(pageURL)).build();
     }
     
+    @Path("/createmoderator")
+    @POST
+    public Response createModerator()
+    {
+        //TODO: Implement
+        return null;
+    }
     
+    @Path("/retrievemoderator")
+    @GET
+    public Response retrieveModerator()
+    {
+        //TODO: Implement
+        return null;
+    }
+    
+    @Path("/updatemoderator")
+    @POST
+    public Response updateModerator()
+    {
+        //TODO: Implement
+        return null;
+    }
+    @Path("/deletemoderator")
+    @POST
+    public Response deleteModerator()
+    {
+        //TODO: Implement
+        return null;
+    }
 
     public static boolean isRegOpen()  {return regOpen;}
 }
