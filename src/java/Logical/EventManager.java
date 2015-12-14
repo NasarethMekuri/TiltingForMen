@@ -20,7 +20,7 @@ public class EventManager
     
     public void startNewEvent(int year, int numOfgallowWriters, int numOfAvailableGallows, int maxParticipantsPrGallow, int minTotalBuffer, List<Shirt> shirts)
     {
-        _event = new Event(year, numOfgallowWriters, numOfAvailableGallows, maxParticipantsPrGallow, minTotalBuffer, shirts);
+        //_event = new Event(year, numOfgallowWriters, numOfAvailableGallows, maxParticipantsPrGallow, minTotalBuffer, shirts);
         
     }
     

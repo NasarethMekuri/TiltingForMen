@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logical;
 
 import Persistence.DBHandler;
@@ -31,7 +26,7 @@ public class PSA
         return _instance;
     }
     
-    public void populateGallows(Gallow[] gallows, int numberOfWriters, int maxParticipantsPrGallow, int minTotalBuffer, int year, List<Shirt> availableShirts)
+    public void populateGallows(Gallow[] gallows, int numberOfWriters, int maxParticipantsPrGallow, int minTotalBuffer, int year)
     {
         List<Participant> participants = DBHandler.getInstance().getParticipantsByYear(year);
         List<Participant> ageGrp1 = new ArrayList<Participant>();
@@ -39,25 +34,6 @@ public class PSA
         List<Participant> ageGrp3 = new ArrayList<Participant>();
         //Map<String, Integer> colorTracker = new HashMap<String, Integer>();
         //List<String> availableColors = new ArrayList<String>();
-        ShirtContainer shirtContainer = new ShirtContainer(availableShirts);
-        
-        //Sorting by Color.
-        /*divideShirtsIntoColors(availableShirts);
-        String tmpColor = "";
-        int colorCount = 0;
-        //Getting the number of different colors and the amount of each color.
-        for (Shirt s : availableShirts)
-        {
-            if(!s.getColor().equals(tmpColor))
-            {
-                colorCount = 0;
-                tmpColor = s.getColor();
-                colorTracker.put(tmpColor, colorCount++);
-                availableColors.add(tmpColor);
-            }
-            else
-                colorTracker.put(tmpColor, colorCount++);
-        }*/
         
         //Divide Participants into age groups.
         for (Iterator<Participant> it = participants.iterator(); it.hasNext();)
@@ -142,12 +118,12 @@ public class PSA
                     for (GameTable game : batch.getGames())
                     {
                         int currentColorIndex = 0;
-                        String currentColor = shirtContainer.getColorByIndex(currentColorIndex); //The color of the first Shirt.
-                        int amount = shirtContainer.getAmountByColor(currentColor); //Amount of THAT color.
-                        if(amount >= game.getParticipants().size())
+                        //String currentColor = shirtContainer.getColorByIndex(currentColorIndex); //The color of the first Shirt.
+                        //int amount = shirtContainer.getAmountByColor(currentColor); //Amount of THAT color.
+                        //if(amount >= game.getParticipants().size())
                         {
-                            String color = shirtContainer.getAvailableColors().get(currentColorIndex);
-                            assignShirts(game.getParticipants(), color);
+                           // String color = shirtContainer.getAvailableColors().get(currentColorIndex);
+                            //assignShirts(game.getParticipants(), color);
                             //TODO: Get list from container based on Color. Or fix inside assing shirts.. probably the latter.
                         }
                     }
