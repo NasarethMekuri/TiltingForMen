@@ -81,7 +81,7 @@ public class LoginService
                         
                         
                         */
-                        break;
+                        return Response.seeOther(URI.create(moderatorPageURL)).build();
                 }
             }
             else

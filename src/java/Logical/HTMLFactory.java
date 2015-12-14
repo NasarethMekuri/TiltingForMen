@@ -46,7 +46,25 @@ public class HTMLFactory
         
         sb.append(elements.getPageBeginning("Galge " + gallowNumber, "Galge " + gallowNumber));
         
-        sb.append(generateTable(DBHandler.getInstance().getParticipantByGallow(gallowNumber))); //******* uncomment
+        sb.append(generateTable(DBHandler.getInstance().getParticipantByGallow(gallowNumber))); 
+        sb.append(elements.getPageEnd());
+        
+        return sb.toString();
+    }
+    
+     /**
+     * Creates a table for a game of Tilting.
+     * @param gallowNumber The desired gallow from which to generate the "table" String.
+     * @return A String as Text/HTML MIME type.
+     */
+    public String createGallowTableForModerators(int gallowNumber)
+    {
+        //TODO: --> This should return the editable version.
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append(elements.getPageBeginning("Galge " + gallowNumber, "Galge " + gallowNumber));
+        
+        sb.append(generateTable(DBHandler.getInstance().getParticipantByGallow(gallowNumber))); 
         sb.append(elements.getPageEnd());
         
         return sb.toString();
@@ -70,7 +88,7 @@ public class HTMLFactory
         
         return sb.toString();
     }
-    
+         
     private String getBeginning(String title)
     {
         return "<!DOCTYPE html>\n" +
