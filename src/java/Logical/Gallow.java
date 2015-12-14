@@ -5,17 +5,17 @@ import java.util.List;
 
 public class Gallow
 {
-    private List<Batch> _batches;
+    private List<GameTable> _games;
 
-    public Gallow(List<Batch> batches)
+    public Gallow(List<GameTable> games)
     {
-        _batches = batches;
+        _games = games;
     }
     
     public Gallow()
     {
-        _batches = new ArrayList<Batch>();
+        _games = new ArrayList<GameTable>();
     }
 
-    public List<Batch> getBatches() { return _batches; }
+    public List<GameTable> getGames() { return _games; }
 }

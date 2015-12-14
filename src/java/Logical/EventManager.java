@@ -18,10 +18,9 @@ public class EventManager
     
     private EventManager(){}
     
-    public void startNewEvent(int year, int numOfgallowWriters, int numOfAvailableGallows, int maxParticipantsPrGallow, int minTotalBuffer, List<Shirt> shirts)
+    public void startNewEvent(int year, int numOfAvailableGallows, int maxParticipantsPrGallow)
     {
-        //_event = new Event(year, numOfgallowWriters, numOfAvailableGallows, maxParticipantsPrGallow, minTotalBuffer, shirts);
-        
+        _event = new Event(year, numOfAvailableGallows, maxParticipantsPrGallow);
     }
     
     public static EventManager getInstance()
@@ -31,5 +30,10 @@ public class EventManager
             _instance = new EventManager();
         }
         return _instance;
+    }
+    
+    public String[] getCurrentParticipantList()
+    {
+        return _event.generateParticipantNameList();
     }
 }

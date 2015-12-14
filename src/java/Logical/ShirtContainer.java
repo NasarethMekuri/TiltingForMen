@@ -1,100 +1,76 @@
 package Logical;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ShirtContainer
 {
-    private List<Shirt> _shirts;
-    private Map<String, Integer> countByColor = new HashMap<String, Integer>();
-    private List<String> _availableColors;
+    private List<Shirt> _shirtsAgeGroupOne;
+    private List<Shirt> _shirtsAgeGroupTwo;
+    private List<Shirt> _shirtsAgeGroupThree;
     
-    public ShirtContainer(List<Shirt> shirts)
+    public ShirtContainer()
     {
-        _shirts = new ArrayList<Shirt>();
-        _availableColors = new ArrayList<String>();
-        putList(shirts);
-        sort();
-    }
-    
-    public void putList(List<Shirt> shirts)
-    {
-        for (Shirt s : shirts)
-        {
-            put(s);
-        }
-    }
-    
-    public void put(Shirt shirt)
-    {
-        if(countByColor.containsKey(shirt.getColor())) 
-        {
-            int currentAmount = countByColor.get(shirt.getColor());
-            countByColor.put(shirt.getColor(), currentAmount++);
-        }
-        else
-        {
-            countByColor.put(shirt.getColor(), 1);
-            _availableColors.add(shirt.getColor());
-        }
-        _shirts.add(shirt);
-        sort();
-    }
-    
-    public Shirt pullByColor(String color)
-    {
-        Shirt shirt = null;
+        _shirtsAgeGroupOne = new ArrayList<Shirt>();
+        _shirtsAgeGroupOne.add(new Shirt("Pink", 24));
+        _shirtsAgeGroupOne.add(new Shirt("Dark Blue", 24));
+        _shirtsAgeGroupOne.add(new Shirt("Black", 24));
+        _shirtsAgeGroupOne.add(new Shirt("Orange", 24));
+        _shirtsAgeGroupTwo = new ArrayList<Shirt>();
+        _shirtsAgeGroupTwo.add(new Shirt("Red", 24));
+        _shirtsAgeGroupTwo.add(new Shirt("Turquoise", 24));
+        _shirtsAgeGroupTwo.add(new Shirt("White", 24));
+        _shirtsAgeGroupThree = new ArrayList<Shirt>();
+        _shirtsAgeGroupThree.add(new Shirt("Green", 24));
+        _shirtsAgeGroupThree.add(new Shirt("Grey", 24));
+        _shirtsAgeGroupThree.add(new Shirt("Yellow", 24));
         
-        for (int i = 0; i < _shirts.size(); i++)
+    }
+    
+    public String getColorForAgeGroup(int ageGroup, int amount)
+    {
+        List<Shirt> tmp = getListByAgeGroup(ageGroup);
+        
+        for (Shirt s : tmp)
         {
-            if(_shirts.get(i).getColor().equals(color))
-            {
-                shirt = _shirts.get(i);
-                _shirts.remove(i);
-            }
+            if(s.getAmount() >= amount)
+                return s.getColor();
         }
-        if(shirt != null) //if color exists
+        return "No color";
+    }
+    
+    public int getFirstAvailableNumberByColor(String color, int ageGrp)
+    {
+        List<Shirt> tmp = getListByAgeGroup(ageGrp);
+        
+        for (Shirt s : tmp)
         {
-            int tmp = countByColor.get(color);
-            countByColor.put(color, tmp--);
+            if(s.getColor().equals(color))
+                return 25 - s.getAmount();
         }
-        return shirt;
+        return -1;
     }
     
-    public int getAmountByColor(String color)
+    public void registerUseOfShirts(String color, int amount, int ageGrp)
     {
-        return countByColor.get(color);
-    }
-    
-    public String getColorByIndex(int index)
-    {
-        return _shirts.get(index).getColor();
-    }
-    
-    public List<String> getAvailableColors()
-    {
-        return _availableColors;
-    }
-    
-    /**
-     * Sorts shirts by color. The order is not taken into account, it simply divides them in groups.
-     * @param shirts The list to be sorted
-     */
-    private void sort()
-    {
-        Collections.sort(_shirts, new Comparator<Shirt>()
+        List<Shirt> tmp = getListByAgeGroup(ageGrp);
+        for (Shirt s : tmp)
         {
-            @Override
-            public int compare(Shirt o1, Shirt o2)
-            {
-                //TODO: Test
-                return o1.getColor().hashCode() - (o2.getColor().hashCode());
-            }
-        });
+            if(s.getColor().equals(color))
+                s.setAmount(s.getAmount() - amount);
+        }
+    }
+    
+    private List<Shirt> getListByAgeGroup(int ageGroup)
+    {
+        List<Shirt> tmp = null;
+        if(ageGroup == 1)
+            tmp = _shirtsAgeGroupOne;
+        else if (ageGroup == 2)
+            tmp = _shirtsAgeGroupThree;
+        else
+            tmp = _shirtsAgeGroupThree;
+        return tmp;
     }
 }

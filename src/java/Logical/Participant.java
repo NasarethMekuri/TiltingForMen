@@ -33,6 +33,7 @@ public class Participant
     public boolean isLastMinute() { return _lastMinute; }
     public boolean hasArrived() { return _arrived; }
     public int getYear() { return _year; }
+    public String getFullName() { return _firstName + " " + _lastName; }
 
     //Setters
     public void setPID(String pID) {_pID = pID; }

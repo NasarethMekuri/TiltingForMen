@@ -26,12 +26,63 @@ public class HTMLFactory
             for (int y = 0; y < row; y++)
             {
                 sb.append("<td>");
-                sb.append(table[x][y]);
+                if(table[x][y] != null)
+                    sb.append(table[x][y]);
+                else
+                    sb.append("");
                 sb.append("</td>");
             }
             sb.append("</tr>");
         }
         sb.append(("</table>"));
+        return sb.toString();
+    }
+    
+    /**
+     * Dynamically creates a HTML formatted String containg a One column table based on the parameter given.
+     * @param table A one dimentional array containing data to be displayed in a table.
+     * @return A HTML formatted String containing the table.
+     */
+    private String generateTable(String[] table)
+    {
+        StringBuilder sb = new StringBuilder();
+        int col = 1;
+        int row = table.length;
+
+        sb.append("<table border=\"1\">");
+        for (int i = 0; i < row; i++)
+        {
+            sb.append("<tr><td>");
+            sb.append(table[i]);
+            sb.append("</td></tr>");
+        }
+        sb.append(("</table>"));
+        return sb.toString();
+    }
+    
+    public String createCurrentParticipantsTable()
+    {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append(elements.getPageBeginning("Deltager Liste ", "Deltager Liste"));
+        String[] pList = EventManager.getInstance().getCurrentParticipantList();
+        sb.append(generateTable(pList));
+        
+        sb.append(elements.getPageEnd());
+        
+        return sb.toString();
+    }
+    
+    public String createGameTable(GameTable game)
+    {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append(elements.getPageBeginning("Game Table ", "Game Table")); //TODO: Use proper data from gametable
+        String[][] gList = game.generateGameTableAsStrings(6);
+        sb.append(generateTable(gList));
+        
+        sb.append(elements.getPageEnd());
+        
         return sb.toString();
     }
     
