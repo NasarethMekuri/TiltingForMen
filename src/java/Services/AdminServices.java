@@ -5,8 +5,10 @@
  */
 package Services;
 
+import java.net.URI;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -17,6 +19,7 @@ import javax.ws.rs.core.UriInfo;
 @Path("adminservices")
 public class AdminServices 
 {
+    private static boolean regOpen = true;
 
     @Context
     private UriInfo context;
@@ -27,6 +30,40 @@ public class AdminServices
     public AdminServices()
     {
     }
+    
+    @Path("/startevent")
+    @POST
+    public Response startEvent(@FormParam("year") int year, @FormParam("availgallows") int numOfAvailableGallows, @FormParam("maxparprgallow") int maxParticipantsPrGallow)
+    {
+        System.out.println("[SYSTEM]: Admin started the event for " + year);
+        String pageURL = "http://127.0.0.1:8080/TiltingForMen/admin_event_started.html";
+        
+       
+        
+        //EventManager.getInstance().startNewEvent(year, numOfAvailableGallows, maxParticipantsPrGallow); //TODO FIRE OFF THIS LINE WHEN MKJ FINISHES REFACTORING THE PSA
+        return Response.seeOther(URI.create(pageURL)).build();
+    }
 
-   
+    @Path("/flipreg")
+    @GET
+    public Response flipReg()
+    {
+        String pageURL = "http://127.0.0.1:8080/TiltingForMen/registration_fail.html";
+        
+        if (isRegOpen())
+        {
+            regOpen = false;
+            pageURL = "http://127.0.0.1:8080/TiltingForMen/admin_reg_closed.html";
+        }
+        else
+        {
+            regOpen = true;
+            pageURL = "http://127.0.0.1:8080/TiltingForMen/admin_reg_open.html";
+        }
+        return Response.temporaryRedirect(URI.create(pageURL)).build();
+    }
+    
+    
+
+    public static boolean isRegOpen()  {return regOpen;}
 }

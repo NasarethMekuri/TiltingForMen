@@ -44,10 +44,10 @@ public class UserServices
         //System.out.println(fName + " " + lName + " is " + age + " years old");
         
         boolean hasParticipant = DBHandler.getInstance().hasParticipant(fName, lName, email);
-        
+        boolean regOpen = AdminServices.isRegOpen();
         String pageURL = "";
         
-        if (!hasParticipant)
+        if (!hasParticipant && regOpen)
         {
             //Writing to the database.
             DBHandler.getInstance().createParticipant(fName, lName, email, null, -1, Integer.parseInt(age), false, false);
