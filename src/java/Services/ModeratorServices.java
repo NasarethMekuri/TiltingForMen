@@ -5,8 +5,12 @@
  */
 package Services;
 
+import Logical.HTMLFactory;
+import Logical.HTMLFileCreator;
+import java.net.URI;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -28,27 +32,14 @@ public class ModeratorServices
     {
     }
 
-    /**
-     * Retrieves representation of an instance of Services.ModeratorServices
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces("application/xml")
-    public String getXml()
+   @Path("/gallowchoice")
+    @POST
+    public Response gallowChoice(@FormParam("gallow") String gallowNumber)
     {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * PUT method for updating or creating an instance of ModeratorServices
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/xml")
-    public void putXml(String content)
-    {
+        String html = HTMLFactory.getInstance().createGallowTable(Integer.parseInt(gallowNumber)); 
+        String pageURL = "http://127.0.0.1:8080/TiltingForMen/"+ HTMLFileCreator.createHTMLPage("gametable", html) + ".html";
+        
+        return Response.seeOther(URI.create(pageURL)).build();
     }
     
     

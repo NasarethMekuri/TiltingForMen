@@ -40,6 +40,8 @@ public class LoginService
         Pattern p = Pattern.compile("[a-zA-Z0-9]\\w{5,50}"); //Special characters are not allowed (including æøå ÆØÅ)
         Matcher compiledPassword = p.matcher(pw);
         String tryAgainURL = "http://127.0.0.1:8080/TiltingForMen/login_error.html";
+        String adminPageURL = "http://127.0.0.1:8080/TiltingForMen/admin_mainpage.html";
+        String moderatorPageURL = "http://127.0.0.1:8080/TiltingForMen/moderator_mainpage.html";
         
         /**
          * //Testing connectivity
@@ -47,7 +49,7 @@ public class LoginService
          */
         
         if (compiledPassword.matches()) //Password regex check
-        {            
+        {
             //[0]=role [1]=Password.
             String[] verificationData = DBHandler.getInstance().getUserByEmail(userName);
             
@@ -56,13 +58,29 @@ public class LoginService
                 switch (Integer.parseInt(verificationData[0]))
                 {
                     case 0:
-                        //role 0 = reserved for system owner - atm sysOwner will be redirected to tryagain. 
+                        //role 0 = reserved for system owner - atm sysOwner will be redirected to tryagain.
                         return Response.seeOther(URI.create(tryAgainURL)).build();
                     case 1:
                         //TODO: redirect to admin page -Same rights as moderator? (role built for future?)
-                        break;
-                        case 2:
+                        /*
+                        "main page" containing:
+                        -Start event (//startNewEvent(int year, int numOfgallowWriters, int numOfAvailableGallows, int maxParticipantsPrGallow))
+                        -CRUD Moderators
+                        -Export list to excell
+                        -lock registration (onsdagsTingen)
+                        */
+                        return Response.seeOther(URI.create(adminPageURL)).build();
+                    case 2:
                         //TODO: redirect to user/Moderator page (gallowChoice for Mods?)
+                        /*
+                        Site containging:
+          (Indskrivning)-shirtHandout: Table with all registered paticipants distributed on ShirtColor/shirtNumber/AgeGroup (MKJ will create)
+                        -shirtHandout must contain option to register e new Participant.
+                        
+                        gallowChoice for Moderators. (replica version of the users site... leads to editable version).
+                        
+                        
+                        */
                         break;
                 }
             }

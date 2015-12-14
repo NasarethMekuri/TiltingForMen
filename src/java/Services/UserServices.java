@@ -6,13 +6,9 @@
 package Services;
 
 import Logical.HTMLFactory;
+import Logical.HTMLFileCreator;
 import Persistence.DBHandler;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -79,10 +75,10 @@ public class UserServices
         else
         {
             //TODO: Determine how many gallows are active. (Admin startEventButton? in adminJava-Client???)
-          
+            
             
             String html = HTMLFactory.getInstance().createGallowChoicePage(23);
-            createHTMLPage("gallowchoice", html);
+            HTMLFileCreator.createHTMLPage("gallowchoice", html);
             
             pageURL = "http://127.0.0.1:8080/TiltingForMen/gallowchoice.html";
         }
@@ -95,61 +91,12 @@ public class UserServices
     public Response gallowChoice(@FormParam("gallow") String gallowNumber)
     {
         String html = HTMLFactory.getInstance().createGallowTable(Integer.parseInt(gallowNumber)); //Redirect to a table with participants for the chosen gallow.
-        String pageURL = "http://127.0.0.1:8080/TiltingForMen/"+ createHTMLPage("gametable", html) + ".html";
+        String pageName = "gametable";
+        String pageURL = "http://127.0.0.1:8080/TiltingForMen/"+ HTMLFileCreator.createHTMLPage(pageName, html) + ".html";
         
         return Response.seeOther(URI.create(pageURL)).build();
     }
     
-    /**
-     * Used for testing on different systems
-     * @return The local path for the web directory.
-     */
-    private String getPath()
-    {
-        String user = System.getProperty("user.name");
-        if (!user.equals("bruger")) 
-        {
-            if (!user.equals("Cymon343"))
-            {
-                return "C:\\Users\\Simon\\Documents\\GitHub\\TiltingForMen\\web"; //Server @SimonLaptop
-            }
-            else
-            {
-                return "C:\\Users\\Cymon343\\Documents\\GitHub\\TiltingForMen\\web"; //Server @SimonDesktop
-            }
-        }
-        else
-        {
-            return "C:\\Homework\\3.Sem Project\\TiltingForMen\\web"; //Server @MortenLaptop
-        }
-    }
+  
     
-    private String createHTMLPage(String pageName, String HTML)
-    {
-        String path = getPath() + "/"+ pageName +".html";
-        File f = new File(path);
-            OutputStreamWriter writer = null;
-            
-            try
-            {
-                writer = new OutputStreamWriter(new FileOutputStream(f), StandardCharsets.UTF_8);
-                writer.write(HTML);
-            }
-            catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-            finally
-            {
-                try
-                {
-                    writer.close();
-                }
-                catch (IOException ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
-            return pageName;
-    }
 }
