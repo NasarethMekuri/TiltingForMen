@@ -21,7 +21,7 @@ public class HTMLElementsHolder
         Scanner scan = null;
         try
         {
-            scan = new Scanner(new File(getPath() + "/template.html"));
+            scan = new Scanner(new File(HTMLFileCreator.getPath() + "/template.html"));
             
             while (scan.hasNextLine())
             {
@@ -108,29 +108,5 @@ public class HTMLElementsHolder
     {
         return "<form action=\""+ target +"\">\n<div class=\"mbr-buttons mbr-buttons--center\">\n<button type=\"submit\" class=\"mbr-buttons__btn btn btn-sm btn-danger\">"+ buttonName +"</button>\n</div>\n</form>";
     }
-    
-    //**WARNING TODO FIXME : Duplicate code from UserServices!!! **\\
-    /**
-     * Used for testing on different systems
-     * @return The local path for the web directory.
-     */
-    private String getPath()
-    {
-        String user = System.getProperty("user.name");
-        if (!user.equals("bruger"))
-        {
-            if (!user.equals("Cymon343"))
-            {
-                return "C:\\Users\\Simon\\Documents\\GitHub\\TiltingForMen\\web"; //Server @SimonLaptop
-            }
-            else
-            {
-                return "C:\\Users\\Cymon343\\Documents\\GitHub\\TiltingForMen\\web"; //Server @SimonDesktop
-            }
-        }
-        else
-        {
-            return "C:\\Homework\\3.Sem Project\\TiltingForMen\\web"; //Server @MortenLaptop
-        }
-    }
+        
 }
