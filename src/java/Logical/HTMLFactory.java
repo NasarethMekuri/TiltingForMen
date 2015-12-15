@@ -1,7 +1,5 @@
 package Logical;
 
-import Persistence.DBHandler;
-
 public class HTMLFactory
 {
     private static HTMLFactory _instance;
@@ -157,9 +155,10 @@ public class HTMLFactory
      * @param gallowNumber The desired gallow from which to generate the "table" String.
      * @return A String as Text/HTML MIME type.
      */
-    public String createGallowTable(int gallowNumber)
+    public String createGameTable(int gallowNumber)
     {
-        StringBuilder sb = new StringBuilder(); //TODO: Add gallowNumber-- above this line.
+        gallowNumber --; //Matching 1-based index to 0-based index for List.
+        StringBuilder sb = new StringBuilder(); 
         int numberOfRounds = 6; //TODO: Produce logic for this.
         int currentGame = 0; //ToDO: Produce logic - Should be incremented by endgame Button. Alternatively keep at zero, and simply remove game on EndGame button event.
         sb.append(elements.getPageBeginning("Game Table ", "Game Table")); //TODO: Use proper data from gametable
@@ -176,9 +175,10 @@ public class HTMLFactory
      * @param gallowNumber The desired gallow from which to generate the "table" String.
      * @return A String as Text/HTML MIME type.
      */
-    public String createGallowTableForModerators(int gallowNumber)
+    public String createGameTableForModerators(int gallowNumber)
     {
-        StringBuilder sb = new StringBuilder(); //TODO: Add gallowNumber-- above this line.
+        gallowNumber --; //Matching 1-based index to 0-based index for List.
+        StringBuilder sb = new StringBuilder(); 
         int numberOfRounds = 6; //TODO: Produce logic for this.
         int currentGame = 0; //ToDO: Produce logic - Should be incremented by endgame Button. Alternatively keep at zero, and simply remove game on EndGame button event.
         sb.append(elements.getPageBeginning("Game Table ", "Game Table")); //TODO: Use proper data from gametable
@@ -190,11 +190,12 @@ public class HTMLFactory
         return sb.toString();
     }
     
-    public String createGallowChoicePage(int numberOfGallows)
+    public String createGallowChoicePage(int numberOfGallows, boolean mod)
     {
         StringBuilder sb = new StringBuilder();
         sb.append(elements.getPageBeginning("Vælg galge", "VÆLG GALGE"));
-        sb.append("<form action=\"webresources/userservices/gallowchoice\" method=\"post\">\n");
+        String formDeclaration = mod? "<form action=\"webresources/moderatorservices/gallowchoice\" method=\"post\">\n" : "<form action=\"webresources/userservices/gallowchoice\" method=\"post\">\n";
+        sb.append(formDeclaration);
         sb.append("<div><center><select name=\"gallow\">");
         
         for (int i = 0; i < numberOfGallows; i++)
@@ -207,27 +208,6 @@ public class HTMLFactory
         sb.append(elements.getPageEnd());
         
         return sb.toString();
-    }
-         
-    private String getBeginning(String title)
-    {
-        return "<!DOCTYPE html>\n" +
-        "<html><head><meta charset=\"UTF-8\"><title> " + title + "</title>\n" +
-        "</head><body>";
-    }
-    
-    private String insertHeading(String heading)
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div class=\"mbr-header mbr-header--center mbr-header--std-padding\"><h2 class=\"mbr-header__text\">");
-        sb.append(heading);
-        sb.append("</h2></div>");
-        return sb.toString();
-    }
-    
-    private String getEnd()
-    {
-        return "</body></html>";
     }
     
     public static HTMLFactory getInstance()

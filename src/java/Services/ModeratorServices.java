@@ -35,11 +35,11 @@ public class ModeratorServices
     
     @Path("/gallowchoice")
     @POST
-    public Response gallowChoice(@FormParam("gallow") String gallowNumber)
+    public Response gallowChoice(@FormParam("gallow") int gallowNumber)
     {
         //TODO: mooderator_gametable.html should be the page where moderators registers scores (So show gametable)
         
-        String html = HTMLFactory.getInstance().createGallowTableForModerators(Integer.parseInt(gallowNumber));
+        String html = HTMLFactory.getInstance().createGameTableForModerators(gallowNumber);
         String pageURL = "http://127.0.0.1:8080/TiltingForMen/"+ HTMLFileCreator.createHTMLPage("moderator_gametable", html) + ".html";
         
         return Response.seeOther(URI.create(pageURL)).build();
@@ -49,7 +49,7 @@ public class ModeratorServices
     @GET
     public Response liveScore()
     {
-        boolean eventIsActive = EventManager.getInstance().getEvent().isActive(); 
+        boolean eventIsActive = EventManager.getInstance().getEvent().isActive();
         String pageURL = null;
         
         if (!eventIsActive)
@@ -57,10 +57,10 @@ public class ModeratorServices
             pageURL = "http://127.0.0.1:8080/TiltingForMen/event_inactive.html";
         }
         else
-        {   
+        {
             int gallows = EventManager.getInstance().getEvent().getGallows().length;
-            String html = HTMLFactory.getInstance().createGallowChoicePage(gallows);
-            HTMLFileCreator.createHTMLPage("gallowchoice", html);
+            String html = HTMLFactory.getInstance().createGallowChoicePage(gallows, true);
+            HTMLFileCreator.createHTMLPage("moderator_gallowchoice", html);
             
             pageURL = "http://127.0.0.1:8080/TiltingForMen/moderator_gallowchoice.html";
         }
@@ -71,21 +71,8 @@ public class ModeratorServices
     @GET
     public Response enrollment()
     {
-        boolean eventIsActive = EventManager.getInstance().getEvent().isActive(); 
-        String pageURL = null;
-        
-        if (!eventIsActive)
-        {
-            pageURL = "http://127.0.0.1:8080/TiltingForMen/event_inactive.html";
-        }
-        else
-        {   
-            String html = HTMLFactory.getInstance().createGallowChoicePage(23); //TODO: un-Hardcode
-            HTMLFileCreator.createHTMLPage("gallowchoice", html);
-            
-            pageURL = "http://127.0.0.1:8080/TiltingForMen/enrollment.html";
-        }
-        //return HTMLFactory.getInstance().createGallowChoicePage(15);
+        //NOT YET IMPLEMENTED  //TODO: Implement!
+        String pageURL = "http://127.0.0.1:8080/TiltingForMen/WIP.html";
         return Response.seeOther(URI.create(pageURL)).build();
     }
     
