@@ -19,6 +19,7 @@ public class GameTable
     private List<Participant> _participants;
     private Map<Participant, List<Boolean>> _scores;
     private String _color;
+    private boolean _isGameOver = false;
     
     public GameTable(List<Participant> participants)
     {
@@ -46,29 +47,36 @@ public class GameTable
     
     public String[][] generateGameTableAsStrings(int numberOfRounds)
     {
-        int cols = 4 + numberOfRounds;
-        int rows = _participants.size() + 1;
-        String[][] result = new String[cols][rows];
+        int col = 4 + numberOfRounds;
+        int row = _participants.size() + 1;
+        String[][] result = new String[col][row];
         
         //Table Headline - Mostly hardcoded stuff
         result[0][0] = "NR.";
-        result[0][1] = "NAVN";
+        result[1][0] = "NAVN";
         //Add amount of colums equal to numberOfRounds
         for(int i = 1; i <= numberOfRounds; i++)
-            result[0][1 + i] = "" + i;
-        result[0][2 + numberOfRounds] = "Antal Ringe";
-        result[0][3 + numberOfRounds] = "Placering";
+        {
+            result[1 + i][0] = "" + i;
+        }
+        result[2 + numberOfRounds][0] = "Antal Ringe";
+        result[3 + numberOfRounds][0] = "Placering";
         
         //Populating the list
         for(int i = 0; i < _participants.size(); i++)
         {
-            result[i + 1][0] = "" + _participants.get(i).getNumber();
-            result[i + 1][1] = _participants.get(i).getFullName();
+            result[0][i + 1] = "" + _participants.get(i).getNumber();
+            result[1][i + 1] = _participants.get(i).getFullName();
         }
         return result;
     }
 
+    //Getters
     public List<Participant> getParticipants() { return _participants; }
     public Map<Participant, List<Boolean>> getScores() { return _scores; }
     public String getColor() { return _color; }
+    public boolean isIsGameOver() { return _isGameOver; }
+
+    //Setters
+    public void setIsGameOver(boolean isGameOver) { _isGameOver = isGameOver; }
 }

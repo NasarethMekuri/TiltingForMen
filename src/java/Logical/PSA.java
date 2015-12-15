@@ -53,6 +53,9 @@ public class PSA
         }
         
         List<List<Participant>> theList = new ArrayList<List<Participant>>();
+        theList.add(ageGrp1);
+        theList.add(ageGrp2);
+        theList.add(ageGrp3);
         int ageGrp = 0;
         //For each sublist in the list. (For each age group)
         for (Iterator<List<Participant>> it1 = theList.iterator(); it1.hasNext();)
@@ -60,7 +63,8 @@ public class PSA
             ageGrp++;
             List<Participant> currentAgeGrp = it1.next();
             sortByLastname(currentAgeGrp);
-            int participantsPrGallow = currentAgeGrp.size() / gallows.length;
+            //int participantsPrGallow = currentAgeGrp.size() / gallows.length; //TODO: Fix integer division issue
+            int participantsPrGallow = (int)Math.round((double)currentAgeGrp.size() / (double)gallows.length);
             
             //Participants pr gallow is either participants / gallows, or participants / maxParticipantsPrGallow + 1
             if(participantsPrGallow > maxParticipantsPrGallow)
@@ -68,22 +72,35 @@ public class PSA
             
             //Creating games
             List<GameTable> games = new ArrayList<GameTable>();
-            int numberOfGames = currentAgeGrp.size() / participantsPrGallow + 1;
+            //int numberOfGames = currentAgeGrp.size() / participantsPrGallow + 1;
+            int numberOfGames = (int)Math.round((double)currentAgeGrp.size() / (double)participantsPrGallow);
             
+            int numberOfParticipantsAdded = 0;
             for (int i = 0; i < numberOfGames; i++)
             {
-                if(currentAgeGrp.size() > participantsPrGallow)
+                if(numberOfParticipantsAdded + participantsPrGallow < currentAgeGrp.size()) //There's enough to fill a gallow with "ParticipantsPrGallow"
                 {
-                    games.add(new GameTable(currentAgeGrp.subList(0, participantsPrGallow)));
-                    currentAgeGrp.removeAll(currentAgeGrp.subList(0, participantsPrGallow));
+                    games.add(new GameTable());
+                    for (int j = 0; j < participantsPrGallow; j++)
+                    {
+                        games.get(games.size() - 1).getParticipants().add(currentAgeGrp.get(numberOfParticipantsAdded));
+                        numberOfParticipantsAdded++;
+                    }
+                    //games.add(new GameTable(currentAgeGrp.subList(0, participantsPrGallow)));
+                    //currentAgeGrp.removeAll(currentAgeGrp.subList(0, participantsPrGallow));
                 }
                 else
                 {
-                    games.add(new GameTable((currentAgeGrp))); //TODO: Handle risk of adding only one Participant to a GameTable.
-                    currentAgeGrp.clear();
-                }
+                    games.add(new GameTable());
+                    int remainingParticipants = currentAgeGrp.size() - numberOfParticipantsAdded;
+                    for (int j = 0; j < remainingParticipants; j++)
+                    {
+                        games.get(games.size() - 1).getParticipants().add(currentAgeGrp.get(numberOfParticipantsAdded));
+                        numberOfParticipantsAdded++;
+                    }
+                } 
             }
-            //Assigning Shirts
+            //Assigning Shirts - //TODO: Check for low participant game, and assign them to other games. (On the line above)
             for (GameTable game : games)
             {
                 int numberOfParticipants = game.getParticipants().size();

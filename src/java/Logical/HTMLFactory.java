@@ -20,17 +20,29 @@ public class HTMLFactory
         int row = table[0].length;
 
         sb.append("<table border=\"1\">");
-        for (int x = 0; x < col; x++)
+        for (int y = 0; y < row; y++)
         {
             sb.append("<tr>");
-            for (int y = 0; y < row; y++)
+            for (int x = 0; x < col; x++)
             {
-                sb.append("<td>");
-                if(table[x][y] != null)
-                    sb.append(table[x][y]);
+                if(y == 0)
+                {
+                    sb.append("<th width=\"200\"><center>");
+                    if(table[x][y] != null)
+                        sb.append(table[x][y]);
+                    else
+                        sb.append("");
+                    sb.append("</center></th>");
+                }
                 else
-                    sb.append("");
-                sb.append("</td>");
+                {
+                    sb.append("<td>");
+                    if(table[x][y] != null)
+                        sb.append(table[x][y]);
+                    else
+                        sb.append("");
+                    sb.append("</td>");
+                }
             }
             sb.append("</tr>");
         }
@@ -87,35 +99,39 @@ public class HTMLFactory
     }
     
     /**
-     * Creates a table for a game of Tilting.
+     * Creates a read-only table for a game of Tilting.
      * @param gallowNumber The desired gallow from which to generate the "table" String.
      * @return A String as Text/HTML MIME type.
      */
     public String createGallowTable(int gallowNumber)
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); //TODO: Add gallowNumber-- above this line.
+        int numberOfRounds = 6; //TODO: Produce logic for this.
+        int currentGame = 0; //ToDO: Produce logic - Should be incremented by endgame Button. Alternatively keep at zero, and simply remove game on EndGame button event.
+        sb.append(elements.getPageBeginning("Game Table ", "Game Table")); //TODO: Use proper data from gametable
+        String[][] gList = EventManager.getInstance().getEvent().getGallows()[gallowNumber].getGames().get(currentGame).generateGameTableAsStrings(numberOfRounds);
+        sb.append(generateTable(gList));
         
-        sb.append(elements.getPageBeginning("Galge " + gallowNumber, "Galge " + gallowNumber));
-        
-        sb.append(generateTable(DBHandler.getInstance().getParticipantByGallow(gallowNumber))); 
         sb.append(elements.getPageEnd());
         
         return sb.toString();
     }
     
      /**
-     * Creates a table for a game of Tilting.
+     * Creates an editable table for a game of Tilting.
      * @param gallowNumber The desired gallow from which to generate the "table" String.
      * @return A String as Text/HTML MIME type.
      */
     public String createGallowTableForModerators(int gallowNumber)
     {
-        //TODO: --> This should return the editable version.
+        //TODO: --> This should return the editable version. - Currently this is not editable.
         StringBuilder sb = new StringBuilder();
+        int numberOfRounds = 6; //TODO: Produce logic for this.
+        int currentGame = 0; //ToDO: Produce logic - Should be incremented by endgame Button. Alternatively keep at zero, and simply remove game on EndGame button event.
+        sb.append(elements.getPageBeginning("Game Table ", "Game Table")); //TODO: Use proper data from gametable
+        String[][] gList = EventManager.getInstance().getEvent().getGallows()[gallowNumber].getGames().get(currentGame).generateGameTableAsStrings(numberOfRounds);
+        sb.append(generateTable(gList));
         
-        sb.append(elements.getPageBeginning("Galge " + gallowNumber, "Galge " + gallowNumber));
-        
-        sb.append(generateTable(DBHandler.getInstance().getParticipantByGallow(gallowNumber))); 
         sb.append(elements.getPageEnd());
         
         return sb.toString();

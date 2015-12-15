@@ -47,6 +47,7 @@ public class Event
     }
         
     public Gallow[] getGallows() { return _gallows; }
+    public boolean isActive() { return _isActive; }
 
     
     

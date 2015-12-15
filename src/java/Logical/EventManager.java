@@ -36,4 +36,6 @@ public class EventManager
     {
         return _event.generateParticipantNameList();
     }
+    
+    public Event getEvent() { return _event; }
 }

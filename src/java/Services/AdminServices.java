@@ -5,6 +5,7 @@
  */
 package Services;
 
+import Logical.EventManager;
 import java.net.URI;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -38,9 +39,7 @@ public class AdminServices
         System.out.println("[SYSTEM]: Admin started the event for " + year);
         String pageURL = "http://127.0.0.1:8080/TiltingForMen/admin_event_started.html";
         
-       
-        
-        //EventManager.getInstance().startNewEvent(year, numOfAvailableGallows, maxParticipantsPrGallow); //TODO FIRE OFF THIS LINE WHEN MKJ FINISHES REFACTORING THE PSA
+        EventManager.getInstance().startNewEvent(year, numOfAvailableGallows, maxParticipantsPrGallow); //TODO FIRE OFF THIS LINE WHEN MKJ FINISHES REFACTORING THE PSA
         return Response.seeOther(URI.create(pageURL)).build();
     }
 

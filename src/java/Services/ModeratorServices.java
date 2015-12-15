@@ -5,6 +5,7 @@
 */
 package Services;
 
+import Logical.EventManager;
 import Logical.HTMLFactory;
 import Logical.HTMLFileCreator;
 import java.net.URI;
@@ -36,7 +37,7 @@ public class ModeratorServices
     @POST
     public Response gallowChoice(@FormParam("gallow") String gallowNumber)
     {
-        //TODO: @MKJ --> Fix this so it refers to the editable table (make the HTMLFactory handle it...)
+        //TODO: mooderator_gametable.html should be the page where moderators registers scores (So show gametable)
         
         String html = HTMLFactory.getInstance().createGallowTableForModerators(Integer.parseInt(gallowNumber));
         String pageURL = "http://127.0.0.1:8080/TiltingForMen/"+ HTMLFileCreator.createHTMLPage("moderator_gametable", html) + ".html";
@@ -48,7 +49,7 @@ public class ModeratorServices
     @GET
     public Response liveScore()
     {
-        boolean eventIsActive = true; //TODO: Create logic begind this bool - 1. determine if event is active. (ongoing)
+        boolean eventIsActive = EventManager.getInstance().getEvent().isActive(); 
         String pageURL = null;
         
         if (!eventIsActive)
@@ -56,16 +57,13 @@ public class ModeratorServices
             pageURL = "http://127.0.0.1:8080/TiltingForMen/event_inactive.html";
         }
         else
-        {
-            //TODO: Determine how many gallows are active. (Admin startEventButton? in adminJava-Client???)
-            
-            
-            String html = HTMLFactory.getInstance().createGallowChoicePage(23); //TODO: un-Hardcode
+        {   
+            int gallows = EventManager.getInstance().getEvent().getGallows().length;
+            String html = HTMLFactory.getInstance().createGallowChoicePage(gallows);
             HTMLFileCreator.createHTMLPage("gallowchoice", html);
             
             pageURL = "http://127.0.0.1:8080/TiltingForMen/moderator_gallowchoice.html";
         }
-        //return HTMLFactory.getInstance().createGallowChoicePage(15);
         return Response.seeOther(URI.create(pageURL)).build();
     }
     
@@ -73,7 +71,7 @@ public class ModeratorServices
     @GET
     public Response enrollment()
     {
-        boolean eventIsActive = true; //TODO: Create logic begind this bool - 1. determine if event is active. (ongoing)
+        boolean eventIsActive = EventManager.getInstance().getEvent().isActive(); 
         String pageURL = null;
         
         if (!eventIsActive)

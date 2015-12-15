@@ -5,6 +5,7 @@
 */
 package Services;
 
+import Logical.EventManager;
 import Logical.HTMLFactory;
 import Logical.HTMLFileCreator;
 import Persistence.DBHandler;
@@ -65,7 +66,7 @@ public class UserServices
     @GET
     public Response liveScore()
     {
-        boolean eventIsActive = true; //TODO: Create logic begind this bool - 1. determine if event is active. (ongoing)
+        boolean eventIsActive = EventManager.getInstance().getEvent().isActive(); 
         String pageURL = null;
         
         if (!eventIsActive)
@@ -76,8 +77,8 @@ public class UserServices
         {
             //TODO: Determine how many gallows are active. (Admin startEventButton? in adminJava-Client???)
             
-            
-            String html = HTMLFactory.getInstance().createGallowChoicePage(23);
+            int gallows = EventManager.getInstance().getEvent().getGallows().length;
+            String html = HTMLFactory.getInstance().createGallowChoicePage(gallows);
             HTMLFileCreator.createHTMLPage("gallowchoice", html);
             
             pageURL = "http://127.0.0.1:8080/TiltingForMen/gallowchoice.html";
