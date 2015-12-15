@@ -14,7 +14,6 @@ import java.util.Scanner;
  */
 public class HTMLElementsHolder
 {
-    
     public String getPageBeginning(String title, String heading)
     {
         StringBuilder sb = new StringBuilder();
@@ -107,6 +106,11 @@ public class HTMLElementsHolder
     public String getButton(String buttonName, String target)
     {
         return "<form action=\""+ target +"\">\n<div class=\"mbr-buttons mbr-buttons--center\">\n<button type=\"submit\" class=\"mbr-buttons__btn btn btn-sm btn-danger\">"+ buttonName +"</button>\n</div>\n</form>";
+    }
+    
+    public String getCheckBox(String name, String value)
+    {
+        return "<input type=\"checkbox\" name=\"" + name + "\" value=\"" + value +"\">";
     }
         
 }

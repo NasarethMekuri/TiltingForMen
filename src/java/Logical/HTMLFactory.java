@@ -51,6 +51,55 @@ public class HTMLFactory
     }
     
     /**
+     * Dynamically creates a HTML formatted String containg a table for logging scores, based on the parameter given.
+     * @param table A two dimentional array containing data to be displayed in a table.
+     * @return A HTML formatted String containing the table.
+     */
+    private String generateScoreTable(String[][] table)
+    {
+        StringBuilder sb = new StringBuilder();
+        int col = table.length;
+        int row = table[0].length;
+
+        sb.append("<table border=\"1\">");
+        for (int y = 0; y < row; y++)
+        {
+            sb.append("<tr>");
+            for (int x = 0; x < col; x++)
+            {
+                if(y == 0)
+                {
+                    sb.append("<th width=\"200\"><center>");
+                    if(table[x][y] != null)
+                        sb.append(table[x][y]);
+                    else
+                        sb.append("");
+                    sb.append("</center></th>");
+                }
+                else
+                {
+                    sb.append("<td>");
+                    if(x > 1 && x < col - 2)
+                    {
+                        sb.append("<center>" + elements.getCheckBox("" + x, "" + x) + "</center>");
+                    }
+                    else
+                    {
+                        if(table[x][y] != null)
+                            sb.append(table[x][y]);
+                        else
+                            sb.append("");
+                    }
+                    sb.append("</td>");
+                }
+            }
+            sb.append("</tr>");
+        }
+        sb.append(("</table>"));
+        return sb.toString();
+    }
+    
+    /**
      * Dynamically creates a HTML formatted String containg a One column table based on the parameter given.
      * @param table A one dimentional array containing data to be displayed in a table.
      * @return A HTML formatted String containing the table.
@@ -85,6 +134,11 @@ public class HTMLFactory
         return sb.toString();
     }
     
+    /**
+     * Unused
+     * @param game
+     * @return 
+     */
     public String createGameTable(GameTable game)
     {
         StringBuilder sb = new StringBuilder();
@@ -124,13 +178,12 @@ public class HTMLFactory
      */
     public String createGallowTableForModerators(int gallowNumber)
     {
-        //TODO: --> This should return the editable version. - Currently this is not editable.
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); //TODO: Add gallowNumber-- above this line.
         int numberOfRounds = 6; //TODO: Produce logic for this.
         int currentGame = 0; //ToDO: Produce logic - Should be incremented by endgame Button. Alternatively keep at zero, and simply remove game on EndGame button event.
         sb.append(elements.getPageBeginning("Game Table ", "Game Table")); //TODO: Use proper data from gametable
         String[][] gList = EventManager.getInstance().getEvent().getGallows()[gallowNumber].getGames().get(currentGame).generateGameTableAsStrings(numberOfRounds);
-        sb.append(generateTable(gList));
+        sb.append(generateScoreTable(gList));
         
         sb.append(elements.getPageEnd());
         
