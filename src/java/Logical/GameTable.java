@@ -46,25 +46,24 @@ public class GameTable
     
     public String[][] generateGameTableAsStrings(int numberOfRounds)
     {
-        int cols = 5 + numberOfRounds;
+        int cols = 4 + numberOfRounds;
         int rows = _participants.size() + 1;
         String[][] result = new String[cols][rows];
         
         //Table Headline - Mostly hardcoded stuff
-        result[0][0] = "CHECK IN";
-        result[0][1] = "NR.";
-        result[0][2] = "NAVN";
+        result[0][0] = "NR.";
+        result[0][1] = "NAVN";
         //Add amount of colums equal to numberOfRounds
         for(int i = 1; i <= numberOfRounds; i++)
-            result[0][2 + i] = "" + i;
-        result[0][3 + numberOfRounds] = "Antal Ringe";
-        result[0][4 + numberOfRounds] = "Placering";
+            result[0][1 + i] = "" + i;
+        result[0][2 + numberOfRounds] = "Antal Ringe";
+        result[0][3 + numberOfRounds] = "Placering";
         
         //Populating the list
         for(int i = 0; i < _participants.size(); i++)
         {
-            result[i + 1][1] = "" + _participants.get(i).getNumber();
-            result[i + 1][2] = _participants.get(i).getFullName();
+            result[i + 1][0] = "" + _participants.get(i).getNumber();
+            result[i + 1][1] = _participants.get(i).getFullName();
         }
         return result;
     }
