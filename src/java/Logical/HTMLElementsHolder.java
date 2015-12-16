@@ -14,13 +14,14 @@ import java.util.Scanner;
  */
 public class HTMLElementsHolder
 {
-    public String getPageBeginning(String title, String heading)
+    public String getPageBeginning(String title, String heading, boolean isGameTable)
     {
         StringBuilder sb = new StringBuilder();
         Scanner scan = null;
         try
         {
-            scan = new Scanner(new File(HTMLFileCreator.getPath() + "/template.html"));
+            
+            scan = isGameTable ? new Scanner(new File(HTMLFileCreator.getPath() + "/template_refresh.html"))  : new Scanner(new File(HTMLFileCreator.getPath() + "/template.html"));
             
             while (scan.hasNextLine())
             {

@@ -123,7 +123,7 @@ public class HTMLFactory
     {
         StringBuilder sb = new StringBuilder();
         
-        sb.append(elements.getPageBeginning("Deltager Liste ", "Deltager Liste"));
+        sb.append(elements.getPageBeginning("Deltager Liste ", "Deltager Liste", false));
         String[] pList = EventManager.getInstance().getCurrentParticipantList();
         sb.append(generateTable(pList));
         
@@ -141,7 +141,7 @@ public class HTMLFactory
     {
         StringBuilder sb = new StringBuilder();
         
-        sb.append(elements.getPageBeginning("Game Table ", "Game Table")); //TODO: Use proper data from gametable
+        sb.append(elements.getPageBeginning("Game Table ", "Game Table", true)); //TODO: Use proper data from gametable
         String[][] gList = game.generateGameTableAsStrings(6);
         sb.append(generateTable(gList));
         
@@ -161,7 +161,7 @@ public class HTMLFactory
         StringBuilder sb = new StringBuilder(); 
         int numberOfRounds = 6; //TODO: Produce logic for this.
         int currentGame = 0; //ToDO: Produce logic - Should be incremented by endgame Button. Alternatively keep at zero, and simply remove game on EndGame button event.
-        sb.append(elements.getPageBeginning("Game Table ", "Game Table")); //TODO: Use proper data from gametable
+        sb.append(elements.getPageBeginning("Game Table ", "Game Table", false)); //TODO: Use proper data from gametable
         String[][] gList = EventManager.getInstance().getEvent().getGallows()[gallowNumber].getGames().get(currentGame).generateGameTableAsStrings(numberOfRounds);
         sb.append(generateTable(gList));
         
@@ -181,7 +181,7 @@ public class HTMLFactory
         StringBuilder sb = new StringBuilder(); 
         int numberOfRounds = 6; //TODO: Produce logic for this.
         int currentGame = 0; //ToDO: Produce logic - Should be incremented by endgame Button. Alternatively keep at zero, and simply remove game on EndGame button event.
-        sb.append(elements.getPageBeginning("Game Table ", "Game Table")); //TODO: Use proper data from gametable
+        sb.append(elements.getPageBeginning("Game Table ", "Game Table", false)); //TODO: Use proper data from gametable
         String[][] gList = EventManager.getInstance().getEvent().getGallows()[gallowNumber].getGames().get(currentGame).generateGameTableAsStrings(numberOfRounds);
         sb.append(generateScoreTable(gList));
         
@@ -193,7 +193,7 @@ public class HTMLFactory
     public String createGallowChoicePage(int numberOfGallows, boolean mod)
     {
         StringBuilder sb = new StringBuilder();
-        sb.append(elements.getPageBeginning("Vælg galge", "VÆLG GALGE"));
+        sb.append(elements.getPageBeginning("Vælg galge", "VÆLG GALGE", false));
         String formDeclaration = mod? "<form action=\"webresources/moderatorservices/gallowchoice\" method=\"post\">\n" : "<form action=\"webresources/userservices/gallowchoice\" method=\"post\">\n";
         sb.append(formDeclaration);
         sb.append("<div><center><select name=\"gallow\">");
