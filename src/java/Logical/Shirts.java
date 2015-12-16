@@ -1,11 +1,11 @@
 package Logical;
 
-public class Shirt
+public class Shirts
 {
     private String _color;
     private int _amount;
     
-    public Shirt(String color, int number)
+    public Shirts(String color, int number)
     {
         _color = color;
         _amount = number;

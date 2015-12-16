@@ -32,7 +32,7 @@ public class PSA
         List<Participant> ageGrp1 = new ArrayList<Participant>();
         List<Participant> ageGrp2 = new ArrayList<Participant>();
         List<Participant> ageGrp3 = new ArrayList<Participant>();
-        ShirtContainer shirts = new ShirtContainer();
+        ShirtsWrapper shirts = new ShirtsWrapper();
         
         //Divide Participants into age groups.
         for (Iterator<Participant> it = participants.iterator(); it.hasNext();)

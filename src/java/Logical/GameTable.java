@@ -5,6 +5,7 @@
  */
 package Logical;
 
+import Persistence.DBHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +42,7 @@ public class GameTable
         {
             p.setColor(color);
             p.setNumber(minNumber);
+            writeToDB(color, minNumber, p.getpID());
             minNumber++;
         }
     }
@@ -69,6 +71,11 @@ public class GameTable
             result[1][i + 1] = _participants.get(i).getFullName();
         }
         return result;
+    }
+    
+    private void writeToDB(String color, int minNumber, String pID)
+    {
+        DBHandler.getInstance().updateParticipantColorAndNumber(pID, color, minNumber);
     }
 
     //Getters

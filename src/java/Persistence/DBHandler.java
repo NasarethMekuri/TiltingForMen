@@ -271,5 +271,41 @@ public class DBHandler
         return _instance;
     }
 
+    public void updateParticipantColorAndNumber(String id, String col, int num)
+    {
+         Connection c = null;
+        try
+        {
+            c = DBConnectionFactory.getInstance().getConnection();
+
+            CallableStatement cs = null;
+            int rowCount = -1;
+
+            cs = c.prepareCall("{call update_participant_color_and_number(?,?,?)}");
+            cs.setString(1, id); //TODO: Agree on a PK
+            cs.setString(2, col);
+            cs.setInt(3, num);
+            
+                        
+            rowCount = cs.executeUpdate(); 
+            cs.close();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println(ex);
+        }
+        finally
+        {
+            try
+            {
+                c.close();
+            }
+            catch (SQLException ex)
+            {
+                System.out.println("Failed to close connection! @DBHandler updateParticipantColorAndNumber\n" + ex.getLocalizedMessage());
+            }
+        }
+    }
+
    
 }
