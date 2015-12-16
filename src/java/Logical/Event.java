@@ -17,14 +17,10 @@ public class Event
         _gallows = new Gallow[_numOfAvailableGallows]; //Initializing gallows.
         populateGallows(maxParticipantsPrGallow, year);
     }
+    
     private void populateGallows(int maxParticipantsPrGallow,  int year)
     {
         PSA.getInstance().populateGallows(_gallows, maxParticipantsPrGallow,  year);
-        
-        for (int i = 0; i < _gallows.length; i++)
-        {
-            //_gallows[i] = new Gallow();
-        }
     }
     
     public String[] generateParticipantNameList()
@@ -43,13 +39,9 @@ public class Event
             }
         }
         return (String[])result.toArray();
-        
     }
-        
+    
+    //Getters
     public Gallow[] getGallows() { return _gallows; }
     public boolean isActive() { return _isActive; }
-
-    
-    
-    
 }

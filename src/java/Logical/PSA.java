@@ -1,16 +1,8 @@
 package Logical;
 
 import Persistence.DBHandler;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-/**
- *
- * @author bruger
- */
 public class PSA
 {
     private static PSA _instance;
@@ -63,16 +55,14 @@ public class PSA
             ageGrp++;
             List<Participant> currentAgeGrp = it1.next();
             sortByLastname(currentAgeGrp);
-            //int participantsPrGallow = currentAgeGrp.size() / gallows.length; //TODO: Fix integer division issue
             int participantsPrGallow = (int)Math.round((double)currentAgeGrp.size() / (double)gallows.length);
             
             //Participants pr gallow is either participants / gallows, or participants / maxParticipantsPrGallow + 1
             if(participantsPrGallow > maxParticipantsPrGallow)
-                participantsPrGallow = currentAgeGrp.size() / maxParticipantsPrGallow + 1;
+                participantsPrGallow = currentAgeGrp.size() / maxParticipantsPrGallow + 1; //Integer division should be fine here.
             
             //Creating games
             List<GameTable> games = new ArrayList<GameTable>();
-            //int numberOfGames = currentAgeGrp.size() / participantsPrGallow + 1;
             int numberOfGames = (int)Math.round((double)currentAgeGrp.size() / (double)participantsPrGallow);
             
             int numberOfParticipantsAdded = 0;
@@ -86,8 +76,6 @@ public class PSA
                         games.get(games.size() - 1).getParticipants().add(currentAgeGrp.get(numberOfParticipantsAdded));
                         numberOfParticipantsAdded++;
                     }
-                    //games.add(new GameTable(currentAgeGrp.subList(0, participantsPrGallow)));
-                    //currentAgeGrp.removeAll(currentAgeGrp.subList(0, participantsPrGallow));
                 }
                 else
                 {
@@ -100,7 +88,8 @@ public class PSA
                     }
                 } 
             }
-            //Assigning Shirts - //TODO: Check for low participant game, and assign them to other games. (On the line above)
+            //TODO: Check for low participant game, and assign them to other games.
+            //Assigning Shirts:
             for (GameTable game : games)
             {
                 int numberOfParticipants = game.getParticipants().size();

@@ -37,17 +37,12 @@ public class LoginService
     @POST
     public Response loginUser(@FormParam("username") String userName, @FormParam("pw") String pw)
     {
-        Pattern p = Pattern.compile("[a-zA-Z0-9]\\w{5,50}"); //Special characters are not allowed (including æøå ÆØÅ)
+        Pattern p = Pattern.compile("[a-zA-Z0-9]\\w{5,50}"); //Special characters are not allowed in password (including æøå ÆØÅ)
         Matcher compiledPassword = p.matcher(pw);
         String tryAgainURL = "http://127.0.0.1:8080/TiltingForMen/login_error.html";
         String adminPageURL = "http://127.0.0.1:8080/TiltingForMen/admin_mainpage.html";
         String moderatorPageURL = "http://127.0.0.1:8080/TiltingForMen/moderator_mainpage.html";
-        
-        /**
-         * //Testing connectivity
-         * System.out.println(userName + " tried to log in.");
-         */
-        
+                
         if (compiledPassword.matches()) //Password regex check
         {
             //[0]=role [1]=Password.
@@ -71,11 +66,6 @@ public class LoginService
                 return Response.seeOther(URI.create(tryAgainURL)).build();
             }
         }
-        else
-        {
-            return Response.seeOther(URI.create(tryAgainURL)).build();
-        }
         return Response.seeOther(URI.create(tryAgainURL)).build();
     }
-    
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logical;
 
 import Persistence.DBHandler;
@@ -11,10 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author bruger
- */
 public class GameTable
 {
     private List<Participant> _participants;
@@ -22,15 +13,15 @@ public class GameTable
     private String _color;
     private boolean _isGameOver = false;
     
-    public GameTable(List<Participant> participants)
+     public GameTable()
     {
-        _participants = participants;
+        _participants = new ArrayList<Participant>();
         _scores = new HashMap<Participant, List<Boolean>>();
     }
     
-    public GameTable()
+    public GameTable(List<Participant> participants)
     {
-        _participants = new ArrayList<Participant>();
+        _participants = participants;
         _scores = new HashMap<Participant, List<Boolean>>();
     }
     

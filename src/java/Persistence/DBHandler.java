@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Persistence;
 
 import Logical.Participant;
@@ -14,18 +10,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- *
- * @author bruger
- */
 public class DBHandler
 {
     private static DBHandler _instance;
     
-    private DBHandler() { } //Private constructor
+    private DBHandler() {} //Private constructor
     
-    public void createParticipant(String fName, String lName, String email, String color, int number, 
-                                  int age, boolean lastMinute, boolean arrived)
+    public void createParticipant(String fName, String lName, String email, String color, int number, int age, boolean lastMinute, boolean arrived)
     {
         Connection c = null;
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -162,12 +153,10 @@ public class DBHandler
         String[] result = new String[2];
         int year = Calendar.getInstance().get(Calendar.YEAR);
         try
-        {
-            
+        {   
             c = DBConnectionFactory.getInstance().getConnection();
 
             CallableStatement cs = null;
-            
 
             cs = c.prepareCall("{call select_user_by_email(?)}");
             cs.setString(1, email);
@@ -197,23 +186,6 @@ public class DBHandler
             }
         }
         return result;
-    }
-    
-    public String[][] getParticipantByGallow(int gallowNumber)
-    {
-        //TODO: Remove Dummy code and make this work! [Database design!]
-        int col = 3;
-        int row = 5;
-        String[][] temp = new String[col][row];
-        
-        for (int x = 0; x < col; x++)
-        {
-            for (int y = 0; y < row; y++)
-            {
-                temp[x][y] = "Galge " + gallowNumber + " " + x + y;
-            }
-        }
-        return temp;
     }
     
     public List<Participant> getParticipantsByYear(int year)
@@ -256,22 +228,8 @@ public class DBHandler
         }
         return result;
     }
-    
-    
-
-    /**
-     * Getter method for the single instance of the DBHandler.
-     * NB: this method is synchronized!
-     * @return the instance of DBHandler
-     */
-    public static synchronized DBHandler getInstance()
-    {
-        if(_instance == null)
-            _instance = new DBHandler();
-        return _instance;
-    }
-
-    public void updateParticipantColorAndNumber(String id, String col, int num)
+  
+      public void updateParticipantColorAndNumber(String id, String col, int num)
     {
          Connection c = null;
         try
@@ -285,7 +243,6 @@ public class DBHandler
             cs.setString(1, id); //TODO: Agree on a PK
             cs.setString(2, col);
             cs.setInt(3, num);
-            
                         
             rowCount = cs.executeUpdate(); 
             cs.close();
@@ -307,5 +264,15 @@ public class DBHandler
         }
     }
 
-   
+    /**
+     * Getter method for the single instance of the DBHandler.
+     * NB: this method is synchronized!
+     * @return the instance of DBHandler
+     */
+    public static synchronized DBHandler getInstance()
+    {
+        if(_instance == null)
+            _instance = new DBHandler();
+        return _instance;
+    } 
 }

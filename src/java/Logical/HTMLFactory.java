@@ -7,6 +7,28 @@ public class HTMLFactory
     private HTMLElementsHolder elements = new HTMLElementsHolder();
     
     /**
+     * Dynamically creates a HTML formatted String containg a One column table based on the parameter given.
+     * @param table A one dimentional array containing data to be displayed in a table.
+     * @return A HTML formatted String containing the table.
+     */
+    private String generateTable(String[] table)
+    {
+        StringBuilder sb = new StringBuilder();
+        int col = 1;
+        int row = table.length;
+        
+        sb.append("<table border=\"1\">");
+        for (int i = 0; i < row; i++)
+        {
+            sb.append("<tr><td>");
+            sb.append(table[i]);
+            sb.append("</td></tr>");
+        }
+        sb.append(("</table>"));
+        return sb.toString();
+    }
+    
+    /**
      * Dynamically creates a HTML formatted String containg a table based on the parameter given.
      * @param table A two dimentional array containing data to be displayed in a table.
      * @return A HTML formatted String containing the table.
@@ -16,7 +38,7 @@ public class HTMLFactory
         StringBuilder sb = new StringBuilder();
         int col = table.length;
         int row = table[0].length;
-
+        
         sb.append("<table border=\"1\">");
         for (int y = 0; y < row; y++)
         {
@@ -45,6 +67,7 @@ public class HTMLFactory
             sb.append("</tr>");
         }
         sb.append(("</table>"));
+        
         return sb.toString();
     }
     
@@ -58,7 +81,7 @@ public class HTMLFactory
         StringBuilder sb = new StringBuilder();
         int col = table.length;
         int row = table[0].length;
-
+        
         sb.append("<table border=\"1\">");
         for (int y = 0; y < row; y++)
         {
@@ -94,28 +117,7 @@ public class HTMLFactory
             sb.append("</tr>");
         }
         sb.append(("</table>"));
-        return sb.toString();
-    }
-    
-    /**
-     * Dynamically creates a HTML formatted String containg a One column table based on the parameter given.
-     * @param table A one dimentional array containing data to be displayed in a table.
-     * @return A HTML formatted String containing the table.
-     */
-    private String generateTable(String[] table)
-    {
-        StringBuilder sb = new StringBuilder();
-        int col = 1;
-        int row = table.length;
-
-        sb.append("<table border=\"1\">");
-        for (int i = 0; i < row; i++)
-        {
-            sb.append("<tr><td>");
-            sb.append(table[i]);
-            sb.append("</td></tr>");
-        }
-        sb.append(("</table>"));
+        
         return sb.toString();
     }
     
@@ -126,25 +128,23 @@ public class HTMLFactory
         sb.append(elements.getPageBeginning("Deltager Liste ", "Deltager Liste", false));
         String[] pList = EventManager.getInstance().getCurrentParticipantList();
         sb.append(generateTable(pList));
-        
         sb.append(elements.getPageEnd());
         
         return sb.toString();
     }
     
     /**
-     * Unused
+     * Currently Unused.
      * @param game
-     * @return 
+     * @return
      */
     public String createGameTable(GameTable game)
     {
         StringBuilder sb = new StringBuilder();
         
-        sb.append(elements.getPageBeginning("Game Table ", "Game Table", true)); //TODO: Use proper data from gametable
+        sb.append(elements.getPageBeginning("Game Table ", "Game Table", true));
         String[][] gList = game.generateGameTableAsStrings(6);
         sb.append(generateTable(gList));
-        
         sb.append(elements.getPageEnd());
         
         return sb.toString();
@@ -155,35 +155,22 @@ public class HTMLFactory
      * @param gallowNumber The desired gallow from which to generate the "table" String.
      * @return A String as Text/HTML MIME type.
      */
-    public String createGameTable(int gallowNumber)
+    public String createGameTable(int gallowNumber, boolean mod)
     {
         gallowNumber --; //Matching 1-based index to 0-based index for List.
-        StringBuilder sb = new StringBuilder(); 
+        StringBuilder sb = new StringBuilder();
         int numberOfRounds = 6; //TODO: Produce logic for this.
-        int currentGame = 0; //ToDO: Produce logic - Should be incremented by endgame Button. Alternatively keep at zero, and simply remove game on EndGame button event.
-        sb.append(elements.getPageBeginning("Game Table ", "Game Table", false)); //TODO: Use proper data from gametable
+        int currentGame = 0; //TODO: Produce logic - Should be incremented by "endgame Button". Alternatively keep at zero, and simply remove game on EndGame button event.
+        sb.append(elements.getPageBeginning("Game Table ", "Game Table", !mod)); //TODO: Use proper data from gametable
         String[][] gList = EventManager.getInstance().getEvent().getGallows()[gallowNumber].getGames().get(currentGame).generateGameTableAsStrings(numberOfRounds);
-        sb.append(generateTable(gList));
-        
-        sb.append(elements.getPageEnd());
-        
-        return sb.toString();
-    }
-    
-     /**
-     * Creates an editable table for a game of Tilting.
-     * @param gallowNumber The desired gallow from which to generate the "table" String.
-     * @return A String as Text/HTML MIME type.
-     */
-    public String createGameTableForModerators(int gallowNumber)
-    {
-        gallowNumber --; //Matching 1-based index to 0-based index for List.
-        StringBuilder sb = new StringBuilder(); 
-        int numberOfRounds = 6; //TODO: Produce logic for this.
-        int currentGame = 0; //ToDO: Produce logic - Should be incremented by endgame Button. Alternatively keep at zero, and simply remove game on EndGame button event.
-        sb.append(elements.getPageBeginning("Game Table ", "Game Table", false)); //TODO: Use proper data from gametable
-        String[][] gList = EventManager.getInstance().getEvent().getGallows()[gallowNumber].getGames().get(currentGame).generateGameTableAsStrings(numberOfRounds);
-        sb.append(generateScoreTable(gList));
+        if (mod)
+        {
+            sb.append(generateScoreTable(gList));
+        }
+        else
+        {
+            sb.append(generateTable(gList));
+        }
         
         sb.append(elements.getPageEnd());
         
@@ -202,9 +189,9 @@ public class HTMLFactory
         {
             sb.append("<option value=\"").append(i + 1).append("\"> Galge ").append(i + 1).append(" </option>");
         }
-        sb.append("</select>"); 
+        sb.append("</select>");
         sb.append(elements.getButton("Vælg Galge"));
-        sb.append("</center></div>"); //added </div> ******
+        sb.append("</center></div>"); 
         sb.append(elements.getPageEnd());
         
         return sb.toString();
@@ -217,5 +204,5 @@ public class HTMLFactory
             _instance = new HTMLFactory();
         }
         return _instance;
-    }   
+    }
 }

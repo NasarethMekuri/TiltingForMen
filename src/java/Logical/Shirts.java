@@ -15,7 +15,5 @@ public class Shirts
     public int getAmount() { return _amount; }
 
     public void setColor(String color){_color = color; }
-    public void setAmount(int number) { _amount = number;} 
-    
-    
+    public void setAmount(int number) { _amount = number;}
 }

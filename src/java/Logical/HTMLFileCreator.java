@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2015 Cymon343.
- * All rights reserved.
- */
 package Logical;
 
 import java.io.File;
@@ -10,10 +6,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
-/**
- *
- * @author Cymon343
- */
 public class HTMLFileCreator
 {
     

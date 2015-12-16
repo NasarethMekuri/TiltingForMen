@@ -6,10 +6,6 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- *
- * @author SBL
- */
 public class DBConnectionFactory 
 {
     private String _user = System.getProperty("user.name");
@@ -17,15 +13,16 @@ public class DBConnectionFactory
 
     private static DBConnectionFactory _instance;
     
-    private final String SERVER_NAME = "localhost";//"10.153.0.143"; //"localhost"; 
+    private final String SERVER_NAME = "localhost";
     private final String DATABASE_INSTANCE = "SQLEXPRESS";
-    private final int PORTNO = 1433;//49197; // 58828; //1433;
+    private final int PORTNO = 1433;
     private final String DATABASE_NAME = "tiltingDB";
     private final String USERNAME = "sa";
     private final String PASSWORD;
 
     private DBConnectionFactory() throws SQLServerException, SQLException 
     {
+        //passwords are set for each programmer for testing purposes.
         if (!_user.equals("bruger"))
         {_pw = "Brutalis";}
         else

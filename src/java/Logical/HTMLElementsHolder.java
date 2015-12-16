@@ -1,17 +1,9 @@
-/*
-* Copyright (c) 2015 Cymon343.
-* All rights reserved.
-*/
 package Logical;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-/**
- *
- * @author Cymon343
- */
 public class HTMLElementsHolder
 {
     public String getPageBeginning(String title, String heading, boolean isGameTable)
@@ -20,7 +12,6 @@ public class HTMLElementsHolder
         Scanner scan = null;
         try
         {
-            
             scan = isGameTable ? new Scanner(new File(HTMLFileCreator.getPath() + "/template_refresh.html"))  : new Scanner(new File(HTMLFileCreator.getPath() + "/template.html"));
             
             while (scan.hasNextLine())
@@ -59,7 +50,7 @@ public class HTMLElementsHolder
     {
         StringBuilder sb = new StringBuilder();
         
-        sb.append("</div></div></div></div></div></section>"); 
+        sb.append("</div></div></div></div></div></section>");
         sb.append("<script src=\"assets/jquery/jquery.min.js\"></script>");
         sb.append("<script src=\"assets/bootstrap/js/bootstrap.min.js\"></script>");
         sb.append("<script src=\"assets/smooth-scroll/SmoothScroll.js\"></script>");
@@ -82,9 +73,9 @@ public class HTMLElementsHolder
             size = 1;
         }
         else if (size >6)
-            {
-                size = 6;
-            }
+        {
+            size = 6;
+        }
         return "<div class=\"mbr-header mbr-header--center mbr-header--std-padding\"> <h"+ size +" class=\"mbr-header__text\">"+ heading +"</h"+ size +"></div>";
     }
     
@@ -113,5 +104,5 @@ public class HTMLElementsHolder
     {
         return "<input type=\"checkbox\" name=\"" + name + "\" value=\"" + value +"\">";
     }
-        
+    
 }
